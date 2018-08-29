@@ -1,0 +1,24 @@
+PODS:
+  - KRActivityIndicatorView (2.1.2)
+  - KRProgressHUD (3.2.2):
+    - KRActivityIndicatorView (= 2.1.2)
+  - SnapKit (4.0.0)
+
+DEPENDENCIES:
+  - KRProgressHUD
+  - SnapKit (~> 4.0.0)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - KRActivityIndicatorView
+    - KRProgressHUD
+    - SnapKit
+
+SPEC CHECKSUMS:
+  KRActivityIndicatorView: 27e7a7e3da7fbc8e5405fbc4088b51cc2095a410
+  KRProgressHUD: 8872da74b1c462e15c82a8fff250a2d34ee82ea2
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+
+PODFILE CHECKSUM: 5d3ff8a2d86b5565ee864006c7ce5677e019e9ae
+
+COCOAPODS: 1.5.3
