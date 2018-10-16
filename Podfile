@@ -9,5 +9,6 @@ target 'Contact List' do
 
   pod 'SnapKit', '~> 4.0.0'
   pod "KRProgressHUD"
+  pod "RealmSwift"
 
 end

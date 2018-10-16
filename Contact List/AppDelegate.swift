@@ -8,29 +8,16 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var coordinator: ContactsListCoordinator!
 
     func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?)
-        -> Bool {
-        let contactsListViewModel = ContactsListViewModel()
-        let tableViewController = ContactsListController(viewModel: contactsListViewModel)
+                     didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         self.window = UIWindow(frame: UIScreen.main.bounds)
         self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = UINavigationController(rootViewController: tableViewController)
+        self.window?.rootViewController = UINavigationController(nibName: nil, bundle: nil)
+        guard let navigationController = window?.rootViewController as? UINavigationController else { return true }
+        coordinator = ContactsListCoordinator(navigationController: navigationController)
+        coordinator.start()
         return true
-    }
-
-    func applicationWillResignActive(_ application: UIApplication) { }
-
-    func applicationDidEnterBackground(_ application: UIApplication) {
-    }
-
-    func applicationWillEnterForeground(_ application: UIApplication) {
-    }
-
-    func applicationDidBecomeActive(_ application: UIApplication) {
-    }
-
-    func applicationWillTerminate(_ application: UIApplication) {
     }
 }

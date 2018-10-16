@@ -2,7 +2,6 @@
 //  DefaultCell.swift
 //  Contact List
 
-
 import UIKit
 
 class DefaultCell: UITableViewCell {

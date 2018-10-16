@@ -1,0 +1,280 @@
+//
+//  ContactDetailController.swift
+//  Contact List
+
+import SnapKit
+
+class ContactDetailController: UIViewController {
+    
+    // MARK: - Properties
+    private var contactDetailView = ContactImageView()
+    private var contactDetailViewModel: ContactDetailViewModel?
+    private let detailCellReuse = "cellIdDetail"
+    private let cellNoteId = "cellNoteId"
+    private let cellSongId = "cellSongId"
+    private let cellDeleteId = "cellDeleteId"
+    private let dataTableView: UITableView = UITableView()
+    
+    // MARK: - Init / deinit
+    init(viewModel: ContactDetailViewModel) {
+        self.contactDetailViewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        contactDetailView.updateImage(image: viewModel.image)
+        contactDetailViewModel?.didChangeSong = { [unowned self] data in
+            self.contactDetailViewModel?.showPicker()
+        }
+        contactDetailViewModel?.didDeleteContact = { [unowned self] in
+            Alert.returnDefaultAlert(on: self,
+                                     with: "Delete",
+                                     message: "Do you want to delete this contact?", action: {
+                self.contactDetailViewModel?.deleteContact()
+            })
+        }
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillShow, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.removeObserver(self, name: Notification.Name.UIKeyboardWillChangeFrame, object: nil)
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureContactDetailController()
+        self.view.backgroundColor = .darkslategray
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.contactDetailViewModel?.updateSong(songName: contactDetailViewModel?.song)
+        self.dataTableView.reloadData()
+    }
+    
+    // MARK: - Configure contact detail controller
+    private func configureNavigationBar() {
+        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        
+        navigationController?.navigationBar.barTintColor = .silver
+        navigationController?.navigationBar.shadowImage = UIImage()
+        navigationController?.navigationBar.tintColor = .black
+        navigationController?.navigationBar.titleTextAttributes = textAttributes
+        navigationItem.title = contactDetailViewModel?.firstName ?? ""
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
+                                                           style: .plain,
+                                                           target: nil,
+                                                           action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save",
+                                                            style: .done,
+                                                            target: self,
+                                                            action: #selector(saveObject))
+    }
+    
+    private func configureContactDetailView() {
+        contactDetailView.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 206)
+    }
+    
+    private func addDataTableView() {
+        self.view.addSubview(dataTableView)
+        dataTableView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.snp.top).offset(Constant.marginLeftAndRightValue)
+            make.left.equalTo(self.view.snp.left)
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.right.equalTo(self.view.snp.right)
+        }
+        dataTableView.dataSource = self
+        dataTableView.backgroundColor = .darkslategray
+        dataTableView.tableFooterView = UIView()
+        dataTableView.separatorStyle = .none
+        dataTableView.register(ContactDetailCell.self, forCellReuseIdentifier: detailCellReuse)
+        dataTableView.register(ContactNoteCell.self, forCellReuseIdentifier: cellNoteId)
+        dataTableView.register(ContactSongCell.self, forCellReuseIdentifier: cellSongId)
+        dataTableView.register(ContactDeleteCell.self, forCellReuseIdentifier: cellDeleteId)
+        dataTableView.tableHeaderView = contactDetailView
+        contactDetailView.addGestureRecognizer(configureGesture())
+    }
+    
+    private func addKeyboardEvents() {
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChange(notification:)),
+                                               name: Notification.Name.UIKeyboardWillShow,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChange(notification:)),
+                                               name: Notification.Name.UIKeyboardWillHide,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(keyboardWillChange(notification:)),
+                                               name: Notification.Name.UIKeyboardWillChangeFrame,
+                                               object: nil)
+    }
+    
+    private func configureContactDetailController() {
+        configureNavigationBar()
+        configureContactDetailView()
+        addDataTableView()
+        addKeyboardEvents()
+        hideKeyboardOutsideTap()
+    }
+    
+    // MARK: - Connfigure gesture
+    private func configureGesture() -> UITapGestureRecognizer {
+        let configGesture = UITapGestureRecognizer(target: self,
+                                                   action: #selector(choosePhoto(sender:)))
+        configGesture.numberOfTapsRequired = 1
+        configGesture.numberOfTouchesRequired = 1
+        return configGesture
+    }
+    
+    private func hideKeyboardOutsideTap() {
+        let hideKeyboardGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        self.view.addGestureRecognizer(hideKeyboardGesture)
+    }
+    
+    // MARK: - Methods change photo
+    @objc private func choosePhoto(sender: UITapGestureRecognizer) {
+        
+        let alertController = UIAlertController(title: NSLocalizedString("Источник фотографии",
+                                                                         comment: "Источник фотографии"),
+                                                message: nil, preferredStyle: .actionSheet)
+        
+        let cameraAction = UIAlertAction(title: NSLocalizedString("Камера",
+                                                                  comment: "Камера"),
+                                         style: .default,
+                                         handler: { (_) in
+            self.chooseImagePickerAction(source: .camera)
+        })
+        
+        let photoLibAction = UIAlertAction(title: NSLocalizedString("Фото",
+                                                                    comment: "Фото"),
+                                           style: .default,
+                                           handler: { (_) in
+            self.chooseImagePickerAction(source: .photoLibrary)
+        })
+        
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Отмена", comment: "Отмена"),
+                                         style: .cancel,
+                                         handler: nil)
+        
+        alertController.addAction(cameraAction)
+        alertController.addAction(photoLibAction)
+        alertController.addAction(cancelAction)
+        alertController.view.tintColor = UIColor.darkslategray
+        
+        self.present(alertController,
+                     animated: true,
+                     completion: nil)
+    }
+    
+    private func chooseImagePickerAction(source: UIImagePickerControllerSourceType) {
+        if UIImagePickerController.isSourceTypeAvailable(source) {
+            let imagePicker = UIImagePickerController()
+            imagePicker.delegate = self
+            imagePicker.allowsEditing = true
+            imagePicker.sourceType = source
+            self.present(imagePicker, animated: true) {
+                self.view.endEditing(true)
+            }
+        }
+    }
+    
+    // MARK: - Internal methods
+    @objc private func saveObject() {
+        contactDetailViewModel?.saveContact()
+    }
+    
+    @objc private func keyboardWillChange(notification: Notification) {
+        print("keyboard will show: \(notification.name.rawValue)")
+        
+        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        
+        if notification.name == Notification.Name.UIKeyboardWillShow ||
+            notification.name == Notification.Name.UIKeyboardWillChangeFrame {
+            dataTableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardRect.height, 0)
+        } else {
+            if #available(iOS 11.0, *) {
+                dataTableView.contentInset = .zero
+            } else {
+                dataTableView.contentInset = UIEdgeInsetsMake(Constant.insertFromSize, 0, 0, 0)
+            }
+        }
+    }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+}
+
+// MARK: - Extension image picker controller
+extension ContactDetailController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController,
+                               didFinishPickingMediaWithInfo info: [String: Any]) {
+        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        contactDetailView.updateImage(image: image)
+        contactDetailViewModel?.updateImage?(image)
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
+    }
+}
+
+// MARK: - Extension table data source
+extension ContactDetailController: UITableViewDataSource {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.contactDetailViewModel?.numberOfRows() ?? 0
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        return Constant.cellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let detailCellVM = contactDetailViewModel?.detailCellViewModel(forIndexPath: indexPath) ??
+            ContactDetailCellViewModel(value: contactDetailViewModel!,
+                                       typeCell: .name)
+
+        guard let cellSong = tableView.dequeueReusableCell(withIdentifier: cellSongId, for: indexPath)
+            as? ContactSongCell else { return UITableViewCell(style: .default,
+                                                              reuseIdentifier: cellSongId) }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: detailCellReuse,
+                                                       for: indexPath)
+            as? ContactDetailCell else { return UITableViewCell(style: .default,
+                                                               reuseIdentifier: detailCellReuse) }
+        guard let cellNote = tableView.dequeueReusableCell(withIdentifier: cellNoteId,
+                                                           for: indexPath) as?
+            ContactNoteCell else { return UITableViewCell(style: .default,
+                                                reuseIdentifier: cellNoteId)}
+        guard let cellDelete = tableView.dequeueReusableCell(withIdentifier: cellDeleteId,
+                                                           for: indexPath) as?
+            ContactDeleteCell else { return UITableViewCell(style: .default,
+                                                          reuseIdentifier: cellDeleteId)}
+        
+        if let detailCellViewModel = detailCellVM as? ContactDetailCellViewModel {
+            cell.configure(with: detailCellViewModel)
+            return cell
+        } else if let songCellViewModel = detailCellVM as? ContactSongCellViewModel {
+            cellSong.configure(with: songCellViewModel)
+            return cellSong
+        } else if let noteCellViewModel = detailCellVM as? ContactNoteCellViewModel {
+            cellNote.configure(with: noteCellViewModel)
+            return cellNote
+        } else {
+            let deleteCellViewModel = detailCellVM as? ContactDeleteCellViewModel
+            cellDelete.configure(with: deleteCellViewModel)
+            return cellDelete
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Hello")
+    }
+}

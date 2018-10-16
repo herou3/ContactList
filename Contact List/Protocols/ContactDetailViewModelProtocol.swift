@@ -6,8 +6,14 @@ import UIKit
 
 protocol ContactDetailViewModelProtocol {
     
-    var image: UIImage? { get }
-    var name: String? { get }
-    var age: String? { get }
-
+    var firstName: String? { get set }
+    var lastName: String? { get set }
+    var phone: String? { get set }
+    var song: String? { get set }
+    var note: String? { get set }
+    var image: UIImage? { get set }
+    
+    func numberOfRows() -> Int
+    func detailCellViewModel(forIndexPath indexPath: IndexPath) -> ContactCellViewModelProtocol?
+    func saveContact()
 }

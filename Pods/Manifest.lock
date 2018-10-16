@@ -2,23 +2,33 @@ PODS:
   - KRActivityIndicatorView (2.1.2)
   - KRProgressHUD (3.2.2):
     - KRActivityIndicatorView (= 2.1.2)
+  - Realm (3.7.2):
+    - Realm/Headers (= 3.7.2)
+  - Realm/Headers (3.7.2)
+  - RealmSwift (3.7.2):
+    - Realm (= 3.7.2)
   - SnapKit (4.0.0)
 
 DEPENDENCIES:
   - KRProgressHUD
+  - RealmSwift
   - SnapKit (~> 4.0.0)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - KRActivityIndicatorView
     - KRProgressHUD
+    - Realm
+    - RealmSwift
     - SnapKit
 
 SPEC CHECKSUMS:
   KRActivityIndicatorView: 27e7a7e3da7fbc8e5405fbc4088b51cc2095a410
   KRProgressHUD: 8872da74b1c462e15c82a8fff250a2d34ee82ea2
+  Realm: dd18c3014e8d90df300b83c6da740067436089c5
+  RealmSwift: 79917cae59a0c43ef8118b233a5978891dd50b4a
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
 
-PODFILE CHECKSUM: 5d3ff8a2d86b5565ee864006c7ce5677e019e9ae
+PODFILE CHECKSUM: 65954de2ddc3d08beeae381ceeb51c3d913628c8
 
 COCOAPODS: 1.5.3
