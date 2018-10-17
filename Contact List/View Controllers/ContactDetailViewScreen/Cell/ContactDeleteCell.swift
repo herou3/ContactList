@@ -48,7 +48,7 @@ class ContactDeleteCell: DefaultCell {
             make.height.equalTo(Constant.marginLeftAndRightValue * 4)
         }
         self.deleteButton.addTarget(self,
-                                        action: #selector(deleteAction),
+                                        action: #selector(onDidDeleteAction),
                                         for: .touchUpInside)
         self.backgroundColor = UIColor.darkslategray
     }
@@ -65,8 +65,8 @@ class ContactDeleteCell: DefaultCell {
         }
     }
     
-    // MARK: - Observe text changing
-    @objc private func deleteAction(_ sender: UIButton) {
+    // MARK: - Bind to viewModel
+    @objc private func onDidDeleteAction(_ sender: UIButton) {
         deleteTap?()
     }
 }

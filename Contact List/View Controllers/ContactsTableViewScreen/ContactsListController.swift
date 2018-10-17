@@ -42,9 +42,7 @@ class ContactsListController: UITableViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        
         self.tableView.reloadData()
-        print("Hello")
     }
     
     // MARK: - Configure contact list
@@ -119,12 +117,12 @@ class ContactsListController: UITableViewController {
         
         if notification.name == Notification.Name.UIKeyboardWillShow ||
             notification.name == Notification.Name.UIKeyboardWillChangeFrame {
-            tableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardRect.height, 0)
+            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
         } else {
             if #available(iOS 11.0, *) {
                 tableView.contentInset = .zero
             } else {
-                tableView.contentInset = UIEdgeInsetsMake(Constant.insertFromSize, 0, 0, 0)
+                tableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
             }
         }
     }

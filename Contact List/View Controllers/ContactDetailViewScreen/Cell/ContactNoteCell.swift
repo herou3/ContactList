@@ -11,7 +11,7 @@ import SnapKit
 
 class ContactNoteCell: DefaultCell {
     // MARK: - Properties
-    private var didChangeText: ((_ text: String?) -> Void)?
+    private var changeText: ((_ text: String?) -> Void)?
     private var viewModel: ContactNoteCellViewModel?
     
     // MARK: - Init table
@@ -62,7 +62,7 @@ class ContactNoteCell: DefaultCell {
             make.bottom.equalTo(self).offset(-Constant.marginLeftAndRightValue)
         }
         self.inputTextView.delegate = self
-        self.inputTextView.target(forAction: #selector(textViewDidChangeText(_:)), withSender: self)
+        self.inputTextView.target(forAction: #selector(onDidUpdateText(_:)), withSender: self)
     }
     
     override func setupViews() {
@@ -75,7 +75,7 @@ class ContactNoteCell: DefaultCell {
         self.viewModel = viewModel
         setupViews()
         
-        didChangeText = { [weak viewModel] text in
+        changeText = { [weak viewModel] text in
             viewModel?.changeData(with: text)
         }
         viewModel.selectedTextView = { [] in
@@ -85,9 +85,9 @@ class ContactNoteCell: DefaultCell {
         inputTextView.text = viewModel.value
     }
     
-    // MARK: - Observe text changing
-    @objc private func textViewDidChangeText(_ textView: UITextView) {
-        didChangeText?(textView.text)
+    // MARK: - Bind to viewModel
+    @objc private func onDidUpdateText(_ textView: UITextView) {
+        changeText?(textView.text)
     }
 }
 
@@ -101,6 +101,6 @@ extension ContactNoteCell: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        didChangeText?(textView.text)
+        changeText?(textView.text)
     }
 }

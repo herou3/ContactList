@@ -185,24 +185,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.89097"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "71"
-            endingLineNumber = "71"
-            landmarkName = "configureCellsViewModel()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/CellViewModel/ContactDetailCellViewModel.swift"
-            timestampString = "561386863.891058"
+            timestampString = "561443518.335305"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
@@ -218,7 +202,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/CellViewModel/ContactNoteCellViewModel.swift"
-            timestampString = "561386863.891161"
+            timestampString = "561443518.335439"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "25"
@@ -234,13 +218,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.891234"
+            timestampString = "561443518.335511"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "122"
             endingLineNumber = "122"
-            landmarkName = "detailCellViewModel(forIndexPath:)"
-            landmarkType = "7">
+            landmarkName = "ContactDetailViewModel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -250,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailController.swift"
-            timestampString = "561386863.891295"
+            timestampString = "561443518.335795"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "21"
-            endingLineNumber = "21"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
             landmarkName = "init(viewModel:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,12 +250,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.89135"
+            timestampString = "561443518.335858"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "147"
             endingLineNumber = "147"
-            landmarkName = "updateSong(songName:)"
+            landmarkName = "onDidUpdateSong(songName:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -282,7 +266,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/SongPickerController/SongPickerController.swift"
-            timestampString = "561386863.891432"
+            timestampString = "561443518.336156"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "55"
@@ -298,13 +282,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.8915139"
+            timestampString = "561443518.336234"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "144"
             endingLineNumber = "144"
-            landmarkName = "showPicker()"
-            landmarkType = "7">
+            landmarkName = "ContactDetailViewModel"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -314,12 +298,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/Cell/ContactSongCell.swift"
-            timestampString = "561386863.891577"
+            timestampString = "561443518.3365411"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "94"
             endingLineNumber = "94"
-            landmarkName = "changeTypeSongAction(_:)"
+            landmarkName = "onDidChangeSong(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -330,7 +314,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactListCoordinator.swift"
-            timestampString = "561386863.891642"
+            timestampString = "561443518.336674"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "72"
@@ -346,7 +330,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.891744"
+            timestampString = "561443518.336732"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
@@ -362,7 +346,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactListCoordinator.swift"
-            timestampString = "561386863.891829"
+            timestampString = "561443518.3370661"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "74"
@@ -377,56 +361,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailController.swift"
-            timestampString = "561386863.891891"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "init(viewModel:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Contact_List.ContactDetailController.init(viewModel: Contact_List.ContactDetailViewModel) -&gt; Contact_List.ContactDetailController"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewController/ContactDetailController.swift"
-                  timestampString = "561384897.702246"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "1352">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Swift.String&gt;) -&gt; () in Contact_List.ContactDetailController.init(viewModel: Contact_List.ContactDetailViewModel) -&gt; Contact_List.ContactDetailController"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewController/ContactDetailController.swift"
-                  timestampString = "561384897.704617"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "23"
-                  endingLineNumber = "23"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactImageView/ContactImageView.swift"
-            timestampString = "561386863.89195"
+            timestampString = "561443518.337168"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "67"
@@ -442,7 +378,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/SongPickerController/SongPickerController.swift"
-            timestampString = "561386863.892038"
+            timestampString = "561443518.33725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "83"
@@ -458,7 +394,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactListCoordinator.swift"
-            timestampString = "561386863.892084"
+            timestampString = "561443518.337324"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "118"
@@ -474,7 +410,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactListCoordinator.swift"
-            timestampString = "561386863.892131"
+            timestampString = "561443518.337401"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
@@ -490,7 +426,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactListCoordinator.swift"
-            timestampString = "561386863.892177"
+            timestampString = "561443518.33753"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "63"
@@ -506,11 +442,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailController.swift"
-            timestampString = "561386863.892224"
+            timestampString = "561443518.337618"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "53"
-            endingLineNumber = "53"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
             landmarkName = "viewWillAppear(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -522,12 +458,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/Cell/ContactDetailCell.swift"
-            timestampString = "561386863.89228"
+            timestampString = "561443518.337733"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "163"
             endingLineNumber = "163"
-            landmarkName = "textFieldDidChangeText(_:)"
+            landmarkName = "onDidUpdateText(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -538,7 +474,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.892706"
+            timestampString = "561443518.337901"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "53"
@@ -554,28 +490,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailController.swift"
-            timestampString = "561386863.892797"
+            timestampString = "561443518.338271"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "251"
-            endingLineNumber = "251"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "tableView(_:cellForRowAt:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewController/ContactDetailViewModel.swift"
-            timestampString = "561386863.892872"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "configureCellsViewModel()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -634,7 +554,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/Model/Realm/RealmContact.swift"
-            timestampString = "561386863.893117"
+            timestampString = "561458984.786136"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "71"
@@ -650,7 +570,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactsListViewModel.swift"
-            timestampString = "561386863.893219"
+            timestampString = "561443518.339027"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -666,7 +586,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/Model/Realm/RealmContact.swift"
-            timestampString = "561386863.893296"
+            timestampString = "561458984.786538"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "35"
@@ -682,7 +602,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewController/ContactsListViewModel.swift"
-            timestampString = "561386863.893346"
+            timestampString = "561443518.3392071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "133"
@@ -698,11 +618,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/Cell/ContactDetailCell.swift"
-            timestampString = "561386863.8933949"
+            timestampString = "561443518.339278"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "167"
-            endingLineNumber = "167"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
             landmarkName = "tapNextButton(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -714,12 +634,44 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewController/Cell/ContactDetailCell.swift"
-            timestampString = "561386863.893661"
+            timestampString = "561443518.33936"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "tapNextButton(_:)"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "ContactDetailCell"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Model/Realm/RealmContact.swift"
+            timestampString = "561458984.786871"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "70"
+            endingLineNumber = "70"
+            landmarkName = "transient()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Model/Realm/RealmContact.swift"
+            timestampString = "561458984.787042"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
+            landmarkName = "from(transient:in:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

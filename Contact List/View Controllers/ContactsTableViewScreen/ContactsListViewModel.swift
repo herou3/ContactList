@@ -53,15 +53,15 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
                                                               note: "Test",
                                                               song: "Song",
                                                               id: UUID().uuidString), in: realm),
-                         RealmContact.from(transient: Contact(firstName: "User",
-                                                              lastName: "Test",
+                         RealmContact.from(transient: Contact(firstName: "Corn",
+                                                              lastName: "Track",
                                                               phoneNumber: "355",
                                                               image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
                                                               note: "Test",
                                                               song: "Song",
                                                               id: UUID().uuidString), in: realm)]
         
-        if realm.objects(RealmContact.self).count == 0 {
+        if realm.objects(RealmContact.self).isEmpty {
             for realmContact in realmContacts {
                 try? realm.write {
                     realm.add(realmContact)
@@ -129,12 +129,10 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
             let index = contacts.index(where: {$0.id == newContact.id })
             guard let curentIndex = index else { return }
             contacts[curentIndex] = newContact
-            for obj in realm.objects(RealmContact.self) {
-                if obj.id == contacts[curentIndex].id {
-                    try? self.realm.write {
-                        let realmContact = RealmContact.from(transient: contacts[curentIndex], in: realm)
-                        self.realm.add(realmContact)
-                    }
+            for obj in realm.objects(RealmContact.self) where obj.id == contacts[curentIndex].id {
+                try? self.realm.write {
+                    let realmContact = RealmContact.from(transient: contacts[curentIndex], in: realm)
+                    self.realm.add(realmContact)
                 }
             }
         }
@@ -144,11 +142,9 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         guard let contact = contact else { return }
         let index = contacts.index(where: {$0.id == contact.id })
         guard let curentIndex = index else { return }
-        for obj in realm.objects(RealmContact.self) {
-            if obj.id == contacts[curentIndex].id {
-                try? self.realm.write {
-                    self.realm.delete(obj)
-                }
+        for obj in realm.objects(RealmContact.self) where obj.id == contacts[curentIndex].id {
+            try? self.realm.write {
+                self.realm.delete(obj)
             }
         }
         contacts.remove(at: curentIndex)

@@ -31,7 +31,7 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
         }
     }
     
-    // MARK: - Change data use text
+    // MARK: - bind to Detail view model
     func changeData(with text: String?) {
         self.value = text
     }

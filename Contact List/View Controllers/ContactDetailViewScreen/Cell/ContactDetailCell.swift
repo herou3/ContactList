@@ -7,7 +7,7 @@ import SnapKit
 
 class ContactDetailCell: DefaultCell {
     // MARK: - Properties
-    private var didChangeText: ((_ text: String?) -> Void)?
+    private var changeText: ((_ text: String?) -> Void)?
     private var didTapReturnButton: (() -> Void)?
     private var viewModel: ContactDetailCellViewModel?
     private var typeCell: TypeCell?
@@ -98,7 +98,7 @@ class ContactDetailCell: DefaultCell {
             make.right.equalTo(self).offset(-Constant.marginLeftAndRightValue)
         }
         self.inputTextField.delegate = self
-        self.inputTextField.addTarget(self, action: #selector(textFieldDidChangeText(_:)), for: .editingChanged)
+        self.inputTextField.addTarget(self, action: #selector(onDidUpdateText(_:)), for: .editingChanged)
     }
     
     private func addLineView() {
@@ -141,8 +141,8 @@ class ContactDetailCell: DefaultCell {
             self.inputTextField.becomeFirstResponder()
         }
         
-        didChangeText = { [weak viewModel] text in
-            self.endEditing(with: viewModel?.typeCell)
+        changeText = { [weak viewModel] text in
+            self.onDidEndEditText(with: viewModel?.typeCell)
             viewModel?.changeData(with: text)
         }
         
@@ -154,15 +154,16 @@ class ContactDetailCell: DefaultCell {
         inputTextField.placeholder = typeCell?.description
     }
     
-    // MARK: - Observe text changing
-    func endEditing(with typeCell: TypeCell?) {
+    // MARK: - Bind to viewModel
+    func onDidEndEditText(with typeCell: TypeCell?) {
         viewModel?.value = value
     }
     
-    @objc private func textFieldDidChangeText(_ textField: UITextField) {
-        didChangeText?(textField.text)
+    @objc private func onDidUpdateText(_ textField: UITextField) {
+        changeText?(textField.text)
     }
     
+    // MARK: - Methods for toolBar
     @objc private func tapNextButton(_ sendor: UIBarButtonItem) {
         didTapReturnButton?()
     }
@@ -183,9 +184,21 @@ extension ContactDetailCell: UITextFieldDelegate {
     }
     
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        guard let text = textField.text else { return true }
-        let newLenght = text.count + string.count - range.length
-        return newLenght <= Constant.contactPropertyCharactersCount
+        
+        if typeCell == .phone {
+            
+            let aSet = NSCharacterSet(charactersIn: "+0123456789").inverted
+            let compSepByCharInSet = string.components(separatedBy: aSet)
+            let numberFiltered = compSepByCharInSet.joined(separator: "")
+            guard let text = textField.text else { return true }
+            let newLenght = text.count + string.count - range.length
+            return string == numberFiltered &&  newLenght <= Constant.contactPropertyCharactersCount
+        } else {
+            
+            guard let text = textField.text else { return true }
+            let newLenght = text.count + string.count - range.length
+            return newLenght <= Constant.contactPropertyCharactersCount
+        }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {

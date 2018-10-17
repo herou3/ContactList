@@ -17,19 +17,8 @@ class ContactDetailController: UIViewController {
     
     // MARK: - Init / deinit
     init(viewModel: ContactDetailViewModel) {
-        self.contactDetailViewModel = viewModel
         super.init(nibName: nil, bundle: nil)
-        contactDetailView.updateImage(image: viewModel.image)
-        contactDetailViewModel?.didChangeSong = { [unowned self] data in
-            self.contactDetailViewModel?.showPicker()
-        }
-        contactDetailViewModel?.didDeleteContact = { [unowned self] in
-            Alert.returnDefaultAlert(on: self,
-                                     with: "Delete",
-                                     message: "Do you want to delete this contact?", action: {
-                self.contactDetailViewModel?.deleteContact()
-            })
-        }
+        self.bindTo(viewModel)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +38,7 @@ class ContactDetailController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.contactDetailViewModel?.updateSong(songName: contactDetailViewModel?.song)
+        self.contactDetailViewModel?.onDidUpdateSong(songName: contactDetailViewModel?.song)
         self.dataTableView.reloadData()
     }
     
@@ -85,6 +74,7 @@ class ContactDetailController: UIViewController {
             make.right.equalTo(self.view.snp.right)
         }
         dataTableView.dataSource = self
+        dataTableView.estimatedRowHeight = 50
         dataTableView.backgroundColor = .darkslategray
         dataTableView.tableFooterView = UIView()
         dataTableView.separatorStyle = .none
@@ -136,25 +126,25 @@ class ContactDetailController: UIViewController {
     // MARK: - Methods change photo
     @objc private func choosePhoto(sender: UITapGestureRecognizer) {
         
-        let alertController = UIAlertController(title: NSLocalizedString("Источник фотографии",
-                                                                         comment: "Источник фотографии"),
+        let alertController = UIAlertController(title: NSLocalizedString("Datasource photo",
+                                                                         comment: "Datasource photo"),
                                                 message: nil, preferredStyle: .actionSheet)
         
-        let cameraAction = UIAlertAction(title: NSLocalizedString("Камера",
-                                                                  comment: "Камера"),
+        let cameraAction = UIAlertAction(title: NSLocalizedString("Camera",
+                                                                  comment: "Camera"),
                                          style: .default,
                                          handler: { (_) in
             self.chooseImagePickerAction(source: .camera)
         })
         
-        let photoLibAction = UIAlertAction(title: NSLocalizedString("Фото",
-                                                                    comment: "Фото"),
+        let photoLibAction = UIAlertAction(title: NSLocalizedString("Photo Library",
+                                                                    comment: "Photo Library"),
                                            style: .default,
                                            handler: { (_) in
             self.chooseImagePickerAction(source: .photoLibrary)
         })
         
-        let cancelAction = UIAlertAction(title: NSLocalizedString("Отмена", comment: "Отмена"),
+        let cancelAction = UIAlertAction(title: NSLocalizedString("Cancel", comment: "Cancel"),
                                          style: .cancel,
                                          handler: nil)
         
@@ -180,6 +170,22 @@ class ContactDetailController: UIViewController {
         }
     }
     
+    // MARK: - Bind to viewModel
+    private func bindTo(_ viewModel: ContactDetailViewModel) {
+        self.contactDetailViewModel = viewModel
+        contactDetailView.updateImage(image: viewModel.image)
+        contactDetailViewModel?.changeSong = { [unowned self] in
+            self.contactDetailViewModel?.onDidShowPicker()
+        }
+        contactDetailViewModel?.deleteContact = { [unowned self] in
+            Alert.returnDefaultAlert(on: self,
+                                     with: "Delete",
+                                     message: "Do you want to delete this contact?", action: {
+                                        self.contactDetailViewModel?.onDidGetRequestDelete()
+            })
+        }
+    }
+    
     // MARK: - Internal methods
     @objc private func saveObject() {
         contactDetailViewModel?.saveContact()
@@ -194,12 +200,12 @@ class ContactDetailController: UIViewController {
         
         if notification.name == Notification.Name.UIKeyboardWillShow ||
             notification.name == Notification.Name.UIKeyboardWillChangeFrame {
-            dataTableView.contentInset = UIEdgeInsetsMake(0, 0, keyboardRect.height, 0)
+            dataTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
         } else {
             if #available(iOS 11.0, *) {
                 dataTableView.contentInset = .zero
             } else {
-                dataTableView.contentInset = UIEdgeInsetsMake(Constant.insertFromSize, 0, 0, 0)
+                dataTableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
             }
         }
     }
@@ -213,9 +219,11 @@ class ContactDetailController: UIViewController {
 extension ContactDetailController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController,
                                didFinishPickingMediaWithInfo info: [String: Any]) {
-        guard let image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
-        contactDetailView.updateImage(image: image)
-        contactDetailViewModel?.updateImage?(image)
+        guard var image = info[UIImagePickerControllerOriginalImage] as? UIImage else { return }
+        image = image.resizeWithWidth(width: 700) ?? image
+        let resizeImage = UIImageJPEGRepresentation(image, 0)
+        contactDetailView.updateImage(image: UIImage(data: resizeImage ?? Data()))
+        contactDetailViewModel?.updateImage?(UIImage(data: resizeImage ?? Data()))
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -233,7 +241,7 @@ extension ContactDetailController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        return Constant.cellHeight
+        return UITableViewAutomaticDimension
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -275,6 +283,6 @@ extension ContactDetailController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Hello")
+        
     }
 }

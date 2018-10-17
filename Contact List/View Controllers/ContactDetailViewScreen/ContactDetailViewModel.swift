@@ -30,10 +30,14 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     
     // MARK: - Propertiies
     private var contact: Contact?
-    var newContactCellsViewModel: [ContactCellViewModelProtocol] = []
-    var didChangeSong: ((_ text: String?) -> Void)?
-    var didDeleteContact: (() -> Void)?
+    private var newContactCellsViewModel: [ContactCellViewModelProtocol] = []
     weak var delegate: ContactDetailViewModelDelegate?
+    
+    private var updateData: (() -> Void)?
+    private var updateSongName: ((_ value: String?) -> Void)?
+    var updateImage: ((_ value: UIImage?) -> Void)?
+    var changeSong: (() -> Void)?
+    var deleteContact: (() -> Void)?
     
     var firstName: String?
     var lastName: String?
@@ -41,10 +45,6 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     var song: String?
     var note: String?
     var image: UIImage?
-    
-    var updateData: (() -> Void)?
-    var updateSongName: ((_ value: String?) -> Void)?
-    var updateImage: ((_ value: UIImage?) -> Void)?
     
     // MARK: - init / deinit
     init(contact: Contact?) {
@@ -55,17 +55,17 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         self.note = contact?.note
         self.song = contact?.song
         self.image = UIImage(data: contact?.image ?? Data())
-        configureCellsViewModel()
+        makeCellsViewModel()
     }
     
-    // MARK: - Configure Cells view model
-    private func configureCellsViewModel() {
-        
+    // MARK: - Make cells view model
+    private func makeCellsViewModel() {
+        // for internal methods
         let changingData: (String?) -> Void = { [unowned self] data in
-            self.didChangeSongValue()
+            self.onDidChangeSongValue()
         }
         let deleteContact: () -> Void = { [unowned self] in
-            self.requestDeleteAction()
+            self.onDidRequestOfDelete()
         }
         
         let firstNameCellViewModel = ContactDetailCellViewModel(value: self.firstName as AnyObject, typeCell: .name)
@@ -75,7 +75,6 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         let noteCellViewModel = ContactNoteCellViewModel(value: self.note as AnyObject)
         let deleteContactCellViewModel = ContactDeleteCellViewModel(value: "Delete Contact" as AnyObject,
                                                                  deleteAction: deleteContact)
-        
         firstNameCellViewModel.requestTapReturn = { [] in
             lastNameCellViewModel.selectTextField()
         }
@@ -91,7 +90,6 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         newContactCellsViewModel.append(phoneCellViewModel)
         newContactCellsViewModel.append(noteCellViewModel)
         newContactCellsViewModel.append(songCellViewModel)
-        
         if self.contact?.id != nil {
             newContactCellsViewModel.append(deleteContactCellViewModel)
         }
@@ -127,24 +125,24 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         delegate?.getContact(self.updateContact())
     }
     
-    // MARK: - Internal methods
-    func didChangeSongValue() {
-        didChangeSong?("test")
+    // MARK: - Bind to viewController
+    func onDidChangeSongValue() {
+        changeSong?()
     }
     
-    func requestDeleteAction() {
-        didDeleteContact?()
+    func onDidRequestOfDelete() {
+        deleteContact?()
     }
     
-    func deleteContact() {
+    func onDidGetRequestDelete() {
         delegate?.deleteContact(self.contact)
     }
     
-    func showPicker() {
+    func onDidShowPicker() {
         delegate?.songPickerViewModel()
     }
     
-    func updateSong(songName: String?) {
+    func onDidUpdateSong(songName: String?) {
         updateSongName?(songName)
     }
     

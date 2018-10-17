@@ -77,10 +77,6 @@ final class ContactsListCoordinator {
         changeSongValue?(songValue)
         navigationController?.dismiss(animated: true, completion: nil)
     }
-    
-    private func saveDetailViewModel(viewModel: ContactDetailViewModel) {
-        
-    }
 }
 
 // MARK: - Extension ContactsListViewModelDelegate

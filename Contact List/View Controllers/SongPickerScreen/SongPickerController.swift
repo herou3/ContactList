@@ -11,10 +11,9 @@ import UIKit
 class SongPickerController: UIViewController {
     
     // MARK: - Properties
-    let songPickerViewModel: SongPickerViewModel?
-    let navigationBar = UINavigationBar()
-    let songPickerView = UIPickerView()
-    var choisedSong: String?
+    private let songPickerViewModel: SongPickerViewModel?
+    private let songPickerView = UIPickerView()
+    private var choisedSong: String?
     
     // MARK: - Init / deinit
     init(viewModel: SongPickerViewModel) {
@@ -46,16 +45,6 @@ class SongPickerController: UIViewController {
         self.songPickerView.tintColor = UIColor.appPrimary
     }
     
-    private func addNavigationBar() {
-        self.view.addSubview(navigationBar)
-        navigationBar.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view)
-            make.right.equalTo(self.view)
-            make.left.equalTo(self.view)
-            make.height.equalTo(100)
-        }
-    }
-    
     private func configureNavigationBar() {
         navigationController?.navigationBar.barTintColor = .silver
         navigationController?.navigationBar.shadowImage = UIImage()
@@ -74,13 +63,11 @@ class SongPickerController: UIViewController {
     
     private func configureSongPickerController() {
         addSongPickerController()
-        addNavigationBar()
         configureNavigationBar()
     }
     
     // MARK: - Internal methods
     @objc private func saveChoisedSong() {
-        print(self.choisedSong ?? "Hello")
         songPickerViewModel?.saveSongValue(self.choisedSong ?? "test")
     }
     

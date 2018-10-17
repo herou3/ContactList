@@ -11,7 +11,7 @@ import SnapKit
 
 class  ContactSongCell: DefaultCell {
     // MARK: - Properties
-    private var changeSong: ((_ text: String?) -> Void)?
+    private var changeSong: (() -> Void)?
     private var viewModel: ContactSongCellViewModel?
 
     // MARK: - Init table
@@ -51,7 +51,7 @@ class  ContactSongCell: DefaultCell {
             make.bottom.equalTo(self).offset(-Constant.marginLeftAndRightValue / 2)
         }
         self.chooseSongButton.addTarget(self,
-                                        action: #selector(changeTypeSongAction),
+                                        action: #selector(onDidChangeSong),
                                         for: .touchUpInside)
     }
     
@@ -78,7 +78,7 @@ class  ContactSongCell: DefaultCell {
         
         setupViews()
         
-        changeSong = { [weak viewModel] text in
+        changeSong = { [weak viewModel] in
             viewModel?.requestAction()
         }
         if viewModel.value != nil {
@@ -89,8 +89,8 @@ class  ContactSongCell: DefaultCell {
         chooseSongButton.setTitleColor(.slategray, for: .normal)
     }
     
-    // MARK: - Observe text changing
-    @objc private func changeTypeSongAction(_ sender: UIButton) {
-        changeSong?("Fass")
+    // MARK: - Bind to viewModel
+    @objc private func onDidChangeSong(_ sender: UIButton) {
+        changeSong?()
     }
 }
