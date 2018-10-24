@@ -10,10 +10,10 @@
 		61BA2E1A2EF78688DD2AC9E3 /* Pods_Contact_List.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE19807478EC7D9045ED2E2F /* Pods_Contact_List.framework */; };
 		AB969BF8215A2D9C00FEC469 /* ContactCellViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969BF7215A2D9C00FEC469 /* ContactCellViewModelProtocol.swift */; };
 		AB969C33216216CB00FEC469 /* ContactListCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C32216216CB00FEC469 /* ContactListCoordinator.swift */; };
-		AB969C372166312200FEC469 /* SongPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C362166312200FEC469 /* SongPickerController.swift */; };
-		AB969C392166313C00FEC469 /* SongPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C382166313C00FEC469 /* SongPickerViewModel.swift */; };
-		AB969C40216B474100FEC469 /* SongPickerViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C3F216B474100FEC469 /* SongPickerViewModelProtocol.swift */; };
-		AB969C42216CA60C00FEC469 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C41216CA60C00FEC469 /* String.swift */; };
+		AB969C372166312200FEC469 /* SoundPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C362166312200FEC469 /* SoundPickerController.swift */; };
+		AB969C392166313C00FEC469 /* SoundPickerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C382166313C00FEC469 /* SoundPickerViewModel.swift */; };
+		AB969C40216B474100FEC469 /* SoundPickerViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C3F216B474100FEC469 /* SoundPickerViewModelProtocol.swift */; };
+		AB969C42216CA60C00FEC469 /* String+Contains.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C41216CA60C00FEC469 /* String+Contains.swift */; };
 		AB969C44216DD93700FEC469 /* ContactDeleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C43216DD93700FEC469 /* ContactDeleteCell.swift */; };
 		AB969C46216DD99700FEC469 /* ContactDeleteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C45216DD99700FEC469 /* ContactDeleteCellViewModel.swift */; };
 		AB969C482174BFBA00FEC469 /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C472174BFBA00FEC469 /* Realm.swift */; };
@@ -21,9 +21,9 @@
 		AB969C502179911100FEC469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB969C4F2179911100FEC469 /* Assets.xcassets */; };
 		ABB867A12153735A00E3FCA5 /* ContactNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A02153735900E3FCA5 /* ContactNoteCell.swift */; };
 		ABB867A4215373CA00E3FCA5 /* ContactNoteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A3215373CA00E3FCA5 /* ContactNoteCellViewModel.swift */; };
-		ABB867A6215373E300E3FCA5 /* ContactSongCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A5215373E300E3FCA5 /* ContactSongCellViewModel.swift */; };
-		ABB867A82153747F00E3FCA5 /* ContactSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A72153747F00E3FCA5 /* ContactSongCell.swift */; };
-		ABC0B437212AE1FF00157B11 /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC0B436212AE1FF00157B11 /* Alert.swift */; };
+		ABB867A6215373E300E3FCA5 /* ContactSoundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A5215373E300E3FCA5 /* ContactSoundCellViewModel.swift */; };
+		ABB867A82153747F00E3FCA5 /* ContactSoundCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A72153747F00E3FCA5 /* ContactSoundCell.swift */; };
+		ABC0B437212AE1FF00157B11 /* UIAlert+DefaultAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC0B436212AE1FF00157B11 /* UIAlert+DefaultAlert.swift */; };
 		ABC0B43F212C04B400157B11 /* DefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC0B43E212C04B400157B11 /* DefaultCell.swift */; };
 		ABC29BE3212D26AA00945270 /* ContactDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC29BE2212D26A900945270 /* ContactDetailCell.swift */; };
 		ABCF6EDB2133C95A004E2831 /* ContactDetailCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCF6EDA2133C95A004E2831 /* ContactDetailCellViewModel.swift */; };
@@ -63,10 +63,10 @@
 		497DD1C0C9DB7F607D233B87 /* Pods-Contact List.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Contact List.release.xcconfig"; path = "Pods/Target Support Files/Pods-Contact List/Pods-Contact List.release.xcconfig"; sourceTree = "<group>"; };
 		AB969BF7215A2D9C00FEC469 /* ContactCellViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactCellViewModelProtocol.swift; sourceTree = "<group>"; };
 		AB969C32216216CB00FEC469 /* ContactListCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListCoordinator.swift; sourceTree = "<group>"; };
-		AB969C362166312200FEC469 /* SongPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPickerController.swift; sourceTree = "<group>"; };
-		AB969C382166313C00FEC469 /* SongPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPickerViewModel.swift; sourceTree = "<group>"; };
-		AB969C3F216B474100FEC469 /* SongPickerViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongPickerViewModelProtocol.swift; sourceTree = "<group>"; };
-		AB969C41216CA60C00FEC469 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		AB969C362166312200FEC469 /* SoundPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPickerController.swift; sourceTree = "<group>"; };
+		AB969C382166313C00FEC469 /* SoundPickerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPickerViewModel.swift; sourceTree = "<group>"; };
+		AB969C3F216B474100FEC469 /* SoundPickerViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundPickerViewModelProtocol.swift; sourceTree = "<group>"; };
+		AB969C41216CA60C00FEC469 /* String+Contains.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Contains.swift"; sourceTree = "<group>"; };
 		AB969C43216DD93700FEC469 /* ContactDeleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDeleteCell.swift; sourceTree = "<group>"; };
 		AB969C45216DD99700FEC469 /* ContactDeleteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDeleteCellViewModel.swift; sourceTree = "<group>"; };
 		AB969C472174BFBA00FEC469 /* Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
@@ -74,9 +74,9 @@
 		AB969C4F2179911100FEC469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		ABB867A02153735900E3FCA5 /* ContactNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNoteCell.swift; sourceTree = "<group>"; };
 		ABB867A3215373CA00E3FCA5 /* ContactNoteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNoteCellViewModel.swift; sourceTree = "<group>"; };
-		ABB867A5215373E300E3FCA5 /* ContactSongCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSongCellViewModel.swift; sourceTree = "<group>"; };
-		ABB867A72153747F00E3FCA5 /* ContactSongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSongCell.swift; sourceTree = "<group>"; };
-		ABC0B436212AE1FF00157B11 /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		ABB867A5215373E300E3FCA5 /* ContactSoundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSoundCellViewModel.swift; sourceTree = "<group>"; };
+		ABB867A72153747F00E3FCA5 /* ContactSoundCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSoundCell.swift; sourceTree = "<group>"; };
+		ABC0B436212AE1FF00157B11 /* UIAlert+DefaultAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIAlert+DefaultAlert.swift"; sourceTree = "<group>"; };
 		ABC0B43E212C04B400157B11 /* DefaultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultCell.swift; sourceTree = "<group>"; };
 		ABC29BE2212D26A900945270 /* ContactDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailCell.swift; sourceTree = "<group>"; };
 		ABCF6EDA2133C95A004E2831 /* ContactDetailCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactDetailCellViewModel.swift; sourceTree = "<group>"; };
@@ -135,8 +135,8 @@
 		AB969C34216630FB00FEC469 /* SongPickerScreen */ = {
 			isa = PBXGroup;
 			children = (
-				AB969C362166312200FEC469 /* SongPickerController.swift */,
-				AB969C382166313C00FEC469 /* SongPickerViewModel.swift */,
+				AB969C362166312200FEC469 /* SoundPickerController.swift */,
+				AB969C382166313C00FEC469 /* SoundPickerViewModel.swift */,
 			);
 			path = SongPickerScreen;
 			sourceTree = "<group>";
@@ -154,7 +154,7 @@
 			children = (
 				ABCF6EDA2133C95A004E2831 /* ContactDetailCellViewModel.swift */,
 				ABB867A3215373CA00E3FCA5 /* ContactNoteCellViewModel.swift */,
-				ABB867A5215373E300E3FCA5 /* ContactSongCellViewModel.swift */,
+				ABB867A5215373E300E3FCA5 /* ContactSoundCellViewModel.swift */,
 				AB969C45216DD99700FEC469 /* ContactDeleteCellViewModel.swift */,
 			);
 			path = CellViewModel;
@@ -163,9 +163,7 @@
 		ABC0B435212AE1F000157B11 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				ABC0B436212AE1FF00157B11 /* Alert.swift */,
 				ABC0B43E212C04B400157B11 /* DefaultCell.swift */,
-				AB969C41216CA60C00FEC469 /* String.swift */,
 				AB969C472174BFBA00FEC469 /* Realm.swift */,
 			);
 			path = Base;
@@ -176,7 +174,7 @@
 			children = (
 				ABC29BE2212D26A900945270 /* ContactDetailCell.swift */,
 				ABB867A02153735900E3FCA5 /* ContactNoteCell.swift */,
-				ABB867A72153747F00E3FCA5 /* ContactSongCell.swift */,
+				ABB867A72153747F00E3FCA5 /* ContactSoundCell.swift */,
 				AB969C43216DD93700FEC469 /* ContactDeleteCell.swift */,
 			);
 			path = Cell;
@@ -299,7 +297,7 @@
 				ABEB6E6C21292D950029E248 /* ContactTableCellViewModelProtocol.swift */,
 				ABEB6E6E21292DF80029E248 /* ContactDetailViewModelProtocol.swift */,
 				AB969BF7215A2D9C00FEC469 /* ContactCellViewModelProtocol.swift */,
-				AB969C3F216B474100FEC469 /* SongPickerViewModelProtocol.swift */,
+				AB969C3F216B474100FEC469 /* SoundPickerViewModelProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -307,9 +305,11 @@
 		ABEB6E67212744560029E248 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				AB969C41216CA60C00FEC469 /* String+Contains.swift */,
 				ABCF6EDE213403C9004E2831 /* UIColor+AppColors.swift */,
 				ABCF6F0F2137F2D8004E2831 /* UITextField+ ClearButton.swift */,
 				AB969C4D2177043100FEC469 /* UIImage+Resize.swift */,
+				ABC0B436212AE1FF00157B11 /* UIAlert+DefaultAlert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -466,27 +466,27 @@
 				ABEB6E772129617D0029E248 /* Contact.swift in Sources */,
 				AB969C44216DD93700FEC469 /* ContactDeleteCell.swift in Sources */,
 				ABEB6E812129C8E80029E248 /* ContactDetailViewModel.swift in Sources */,
-				ABC0B437212AE1FF00157B11 /* Alert.swift in Sources */,
+				ABC0B437212AE1FF00157B11 /* UIAlert+DefaultAlert.swift in Sources */,
 				ABCF6F012137B667004E2831 /* RealmContact.swift in Sources */,
 				ABEB6E6D21292D950029E248 /* ContactTableCellViewModelProtocol.swift in Sources */,
 				ABEB6E51212742BD0029E248 /* ContactsListController.swift in Sources */,
 				ABCF6EDB2133C95A004E2831 /* ContactDetailCellViewModel.swift in Sources */,
-				AB969C42216CA60C00FEC469 /* String.swift in Sources */,
+				AB969C42216CA60C00FEC469 /* String+Contains.swift in Sources */,
 				ABEB6E6B21292D120029E248 /* ContactsListViewModelProtocol.swift in Sources */,
-				AB969C40216B474100FEC469 /* SongPickerViewModelProtocol.swift in Sources */,
+				AB969C40216B474100FEC469 /* SoundPickerViewModelProtocol.swift in Sources */,
 				AB969C46216DD99700FEC469 /* ContactDeleteCellViewModel.swift in Sources */,
 				ABEB6E7F2129BEDD0029E248 /* ContactImageView.swift in Sources */,
 				ABB867A12153735A00E3FCA5 /* ContactNoteCell.swift in Sources */,
-				ABB867A6215373E300E3FCA5 /* ContactSongCellViewModel.swift in Sources */,
+				ABB867A6215373E300E3FCA5 /* ContactSoundCellViewModel.swift in Sources */,
 				AB969C33216216CB00FEC469 /* ContactListCoordinator.swift in Sources */,
-				AB969C372166312200FEC469 /* SongPickerController.swift in Sources */,
+				AB969C372166312200FEC469 /* SoundPickerController.swift in Sources */,
 				ABB867A4215373CA00E3FCA5 /* ContactNoteCellViewModel.swift in Sources */,
 				ABC0B43F212C04B400157B11 /* DefaultCell.swift in Sources */,
-				ABB867A82153747F00E3FCA5 /* ContactSongCell.swift in Sources */,
+				ABB867A82153747F00E3FCA5 /* ContactSoundCell.swift in Sources */,
 				ABEB6E6F21292DF80029E248 /* ContactDetailViewModelProtocol.swift in Sources */,
 				ABEB6E7321294B620029E248 /* ContactTableCell.swift in Sources */,
 				ABCF6F102137F2D8004E2831 /* UITextField+ ClearButton.swift in Sources */,
-				AB969C392166313C00FEC469 /* SongPickerViewModel.swift in Sources */,
+				AB969C392166313C00FEC469 /* SoundPickerViewModel.swift in Sources */,
 				ABEB6E7B21296F260029E248 /* ContactsListViewModel.swift in Sources */,
 				ABEB6E4F212742BD0029E248 /* AppDelegate.swift in Sources */,
 				ABEB6E7D2129BCF70029E248 /* ContactDetailController.swift in Sources */,

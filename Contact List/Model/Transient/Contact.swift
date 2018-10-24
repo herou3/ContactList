@@ -11,6 +11,6 @@ struct Contact {
     var phoneNumber: String?
     var image: Data?
     var note: String?
-    var song: String?
+    var sound: String?
     var id: String?
 }

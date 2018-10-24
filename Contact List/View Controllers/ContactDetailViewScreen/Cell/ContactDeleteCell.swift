@@ -12,8 +12,7 @@ import SnapKit
 class ContactDeleteCell: DefaultCell {
     
     // MARK: - Properties
-    private var contactDeleteCellViewModel: ContactDeleteCellViewModel?
-    private var deleteTap: (() -> Void)?
+    var deleteTap: (() -> Void)?
     
     // MARK: - Init / Deintit
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -26,15 +25,15 @@ class ContactDeleteCell: DefaultCell {
     
     // MARK: - Create UIElements for cell
     private var deleteButton: UIButton = {
-        let songButton = UIButton()
-        songButton.backgroundColor = .silver
-        songButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        songButton.tintColor = .black
-        songButton.translatesAutoresizingMaskIntoConstraints = false
-        songButton.contentHorizontalAlignment = .center
-        songButton.setTitle("Delete Contact", for: .normal)
-        songButton.setTitleColor(.black, for: .normal)
-        return songButton
+        let soundButton = UIButton()
+        soundButton.backgroundColor = .silver
+        soundButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        soundButton.tintColor = .black
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.contentHorizontalAlignment = .center
+        soundButton.setTitle("Delete Contact", for: .normal)
+        soundButton.setTitleColor(.black, for: .normal)
+        return soundButton
     }()
     
     // MARK: - Configure delete cell
@@ -48,8 +47,8 @@ class ContactDeleteCell: DefaultCell {
             make.height.equalTo(Constant.marginLeftAndRightValue * 4)
         }
         self.deleteButton.addTarget(self,
-                                        action: #selector(onDidDeleteAction),
-                                        for: .touchUpInside)
+                                    action: #selector(onDidDeleteAction),
+                                    for: .touchUpInside)
         self.backgroundColor = UIColor.darkslategray
     }
     
@@ -58,11 +57,7 @@ class ContactDeleteCell: DefaultCell {
     }
     
     func configure(with viewModel: ContactDeleteCellViewModel?) {
-        self.contactDeleteCellViewModel = viewModel
         setupViews()
-        deleteTap = { [weak viewModel] in
-            viewModel?.deleteAction()
-        }
     }
     
     // MARK: - Bind to viewModel

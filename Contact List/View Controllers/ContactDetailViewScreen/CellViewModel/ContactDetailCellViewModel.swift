@@ -10,17 +10,16 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
     var value: String?
     var typeCell: TypeCell?
     var requestTapReturn: (() -> Void)?
-    var selectedTextField: (() -> Void)?
     
     // MARK: - init / deinit
-    init(value: AnyObject, typeCell: TypeCell) {
+    init(value: String?, typeCell: TypeCell) {
         self.typeCell = typeCell
         self.configure(with: value)
     }
     
     // MARK: - Configure cell
-    internal func configure(with value: AnyObject) {
-        guard let value = value as? String else { return }
+    internal func configure(with value: String?) {
+        guard let value = value else { return }
         switch self.typeCell {
         case .lastName?:
             self.value = value
@@ -38,9 +37,5 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
     
     func requestTapReturnAction() {
         requestTapReturn?()
-    }
-    
-    func selectTextField() {
-        selectedTextField?()
     }
 }

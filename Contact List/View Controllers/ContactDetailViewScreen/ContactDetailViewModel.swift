@@ -6,9 +6,9 @@ import UIKit
 
 protocol ContactDetailViewModelDelegate: class {
     
-    func songPickerViewModel()
-    func getContact(_ contact: Contact?)
-    func deleteContact(_ contact: Contact?)
+    func contactDetailViewModelDidReqestShowSoundPicker(_ viewMidel: ContactDetailViewModel)
+    func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didSaveContact contact: Contact?)
+    func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didDeleteContact contact: Contact?)
 }
 
 enum TypeCell {
@@ -34,15 +34,16 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     weak var delegate: ContactDetailViewModelDelegate?
     
     private var updateData: (() -> Void)?
-    private var updateSongName: ((_ value: String?) -> Void)?
+    private var updateSoundName: ((_ value: String?) -> Void)?
     var updateImage: ((_ value: UIImage?) -> Void)?
-    var changeSong: (() -> Void)?
+    var changeSound: (() -> Void)?
     var deleteContact: (() -> Void)?
+    var didRequestTapReturn: ((_ nextNumberCell: Int) -> Void)?
     
     var firstName: String?
     var lastName: String?
     var phone: String?
-    var song: String?
+    var sound: String?
     var note: String?
     var image: UIImage?
     
@@ -53,7 +54,7 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         self.lastName = contact?.lastName
         self.phone = contact?.phoneNumber
         self.note = contact?.note
-        self.song = contact?.song
+        self.sound = contact?.sound
         self.image = UIImage(data: contact?.image ?? Data())
         makeCellsViewModel()
     }
@@ -61,37 +62,37 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     // MARK: - Make cells view model
     private func makeCellsViewModel() {
         // for internal methods
-        let changingData: (String?) -> Void = { [unowned self] data in
-            self.onDidChangeSongValue()
-        }
-        let deleteContact: () -> Void = { [unowned self] in
-            self.onDidRequestOfDelete()
+        let firstNameCellViewModel = ContactDetailCellViewModel(value: self.firstName, typeCell: .name)
+        let lastNameCellViewModel = ContactDetailCellViewModel(value: self.lastName, typeCell: .lastName)
+        let phoneCellViewModel = ContactDetailCellViewModel(value: self.phone, typeCell: .phone)
+        let soundCellViewModel = ContactSoundCellViewModel(value: self.sound)
+        
+        soundCellViewModel.changeSound = { [unowned self] in
+            self.onDidChangeSoundValue()
         }
         
-        let firstNameCellViewModel = ContactDetailCellViewModel(value: self.firstName as AnyObject, typeCell: .name)
-        let lastNameCellViewModel = ContactDetailCellViewModel(value: self.lastName as AnyObject, typeCell: .lastName)
-        let phoneCellViewModel = ContactDetailCellViewModel(value: self.phone as AnyObject, typeCell: .phone)
-        let songCellViewModel = ContactSongCellViewModel(value: self.song as AnyObject, changeData: changingData)
-        let noteCellViewModel = ContactNoteCellViewModel(value: self.note as AnyObject)
-        let deleteContactCellViewModel = ContactDeleteCellViewModel(value: "Delete Contact" as AnyObject,
-                                                                 deleteAction: deleteContact)
-        firstNameCellViewModel.requestTapReturn = { [] in
-            lastNameCellViewModel.selectTextField()
-        }
-        lastNameCellViewModel.requestTapReturn = { [] in
-            phoneCellViewModel.selectTextField()
-        }
-        phoneCellViewModel.requestTapReturn = { [] in
-            noteCellViewModel.selectTextView()
+        let noteCellViewModel = ContactNoteCellViewModel(value: self.note)
+        let deleteContactCellViewModel = ContactDeleteCellViewModel(value: "Delete Contact")
+        
+        deleteContactCellViewModel.deleteTap = { [unowned self] in
+            self.onDidRequestOfDelete()
         }
         
         newContactCellsViewModel.append(firstNameCellViewModel)
         newContactCellsViewModel.append(lastNameCellViewModel)
         newContactCellsViewModel.append(phoneCellViewModel)
         newContactCellsViewModel.append(noteCellViewModel)
-        newContactCellsViewModel.append(songCellViewModel)
+        newContactCellsViewModel.append(soundCellViewModel)
         if self.contact?.id != nil {
             newContactCellsViewModel.append(deleteContactCellViewModel)
+        }
+        
+        for value in (0...newContactCellsViewModel.count) {
+            guard let detailViewModel = newContactCellsViewModel[value] as? ContactDetailCellViewModel else { break }
+            detailViewModel.requestTapReturn = { [] in
+                let nextValue = value + 1
+                self.didRequestTapReturn?(nextValue)
+            }
         }
         
         updateData = { [unowned self] in
@@ -101,13 +102,17 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
             self.note = noteCellViewModel.value
         }
         
-        updateSongName = { [unowned self] value in
-            self.song = value
-            songCellViewModel.value = self.song
+        updateSoundName = { [unowned self] value in
+            self.sound = value
+            soundCellViewModel.value = self.sound
         }
         
         updateImage = { [unowned self] value in
             self.image = value
+        }
+        
+        changeSound = { [unowned self] in
+            self.delegate?.contactDetailViewModelDidReqestShowSoundPicker(self)
         }
     }
     
@@ -122,12 +127,17 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     
     func saveContact() {
         updateData?()
-        delegate?.getContact(self.updateContact())
+        delegate?.contactDetailViewModel(self, didSaveContact: self.updateContact())
+    }
+    
+    func contactName() -> String {
+        guard let firstName = firstName else { return "No name" }
+        return firstName
     }
     
     // MARK: - Bind to viewController
-    func onDidChangeSongValue() {
-        changeSong?()
+    func onDidChangeSoundValue() {
+        changeSound?()
     }
     
     func onDidRequestOfDelete() {
@@ -135,22 +145,18 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     }
     
     func onDidGetRequestDelete() {
-        delegate?.deleteContact(self.contact)
+        delegate?.contactDetailViewModel(self, didDeleteContact: self.contact)
     }
     
-    func onDidShowPicker() {
-        delegate?.songPickerViewModel()
-    }
-    
-    func onDidUpdateSong(songName: String?) {
-        updateSongName?(songName)
+    func onDidUpdateSound(soundName: String?) {
+        updateSoundName?(soundName)
     }
     
     func updateContact() -> Contact? {
         self.contact?.firstName = self.firstName
         self.contact?.lastName = self.lastName
         self.contact?.phoneNumber = self.phone
-        self.contact?.song = self.song
+        self.contact?.sound = self.sound
         self.contact?.note = self.note
         self.contact?.image = UIImagePNGRepresentation(self.image ?? #imageLiteral(resourceName: "Portrait_placeholder"))
         if contact?.id == nil {

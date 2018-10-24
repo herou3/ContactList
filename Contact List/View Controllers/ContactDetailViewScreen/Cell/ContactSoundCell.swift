@@ -1,5 +1,5 @@
 //
-//  ContactSongCell.swift
+//  ContactSoundCell.swift
 //  Contact List
 //
 //  Created by Pavel Kurilov on 20.09.2018.
@@ -9,10 +9,9 @@
 import UIKit
 import SnapKit
 
-class  ContactSongCell: DefaultCell {
+class  ContactSoundCell: DefaultCell {
     // MARK: - Properties
-    private var changeSong: (() -> Void)?
-    private var viewModel: ContactSongCellViewModel?
+    var changeSound: (() -> Void)?
 
     // MARK: - Init table
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -24,14 +23,14 @@ class  ContactSongCell: DefaultCell {
     }
     
     // MARK: - Create UIElements for cell
-    private var chooseSongButton: UIButton = {
-        let songButton = UIButton()
-        songButton.backgroundColor = .silver
-        songButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
-        songButton.tintColor = .black
-        songButton.translatesAutoresizingMaskIntoConstraints = false
-        songButton.contentHorizontalAlignment = .left
-        return songButton
+    private var chooseSoundButton: UIButton = {
+        let soundButton = UIButton()
+        soundButton.backgroundColor = .silver
+        soundButton.titleLabel?.font = UIFont.systemFont(ofSize: 20)
+        soundButton.tintColor = .black
+        soundButton.translatesAutoresizingMaskIntoConstraints = false
+        soundButton.contentHorizontalAlignment = .left
+        return soundButton
     }()
     
     private let lineView: UIView = {
@@ -41,17 +40,17 @@ class  ContactSongCell: DefaultCell {
         return view
     }()
     
-    // MARK: - Configure song cell
-    private func addChooseSongButton() {
-        addSubview(chooseSongButton)
-        chooseSongButton.snp.makeConstraints { (make) in
+    // MARK: - Configure sound cell
+    private func addChooseSoundButton() {
+        addSubview(chooseSoundButton)
+        chooseSoundButton.snp.makeConstraints { (make) in
             make.top.equalTo(self).offset(Constant.marginLeftAndRightValue / 2)
             make.left.equalTo(self).offset(Constant.marginLeftAndRightValue)
             make.right.equalTo(self).offset(-Constant.marginLeftAndRightValue)
             make.bottom.equalTo(self).offset(-Constant.marginLeftAndRightValue / 2)
         }
-        self.chooseSongButton.addTarget(self,
-                                        action: #selector(onDidChangeSong),
+        self.chooseSoundButton.addTarget(self,
+                                        action: #selector(onDidChangeSound),
                                         for: .touchUpInside)
     }
     
@@ -67,30 +66,25 @@ class  ContactSongCell: DefaultCell {
     }
     
     override func setupViews() {
-        addChooseSongButton()
+        addChooseSoundButton()
         addLineView()
         self.backgroundColor = .silver
     }
     
-    func configure(with viewModel: ContactSongCellViewModel) {
-        
-        self.viewModel = viewModel
+    func configure(with viewModel: ContactSoundCellViewModel) {
         
         setupViews()
         
-        changeSong = { [weak viewModel] in
-            viewModel?.requestAction()
-        }
         if viewModel.value != nil {
-            chooseSongButton.setTitle(viewModel.value, for: .normal)
+            chooseSoundButton.setTitle(viewModel.value, for: .normal)
         } else {
-            chooseSongButton.setTitle("Choice song", for: .normal)
+            chooseSoundButton.setTitle("Choice sound", for: .normal)
         }
-        chooseSongButton.setTitleColor(.slategray, for: .normal)
+        chooseSoundButton.setTitleColor(.slategray, for: .normal)
     }
     
     // MARK: - Bind to viewModel
-    @objc private func onDidChangeSong(_ sender: UIButton) {
-        changeSong?()
+    @objc private func onDidChangeSound(_ sender: UIButton) {
+        changeSound?()
     }
 }

@@ -9,17 +9,22 @@
 import UIKit
 import SnapKit
 
-class ContactsListController: UITableViewController {
+class ContactsListController: UIViewController {
 
     // MARK: - Properties
     private var viewModel: ContactsListViewModelProtocol?
-    private let recipeCellReuseIdentifier = "cellId"
+    private let contactCellReuseIdentifier = "cellId"
     private let searchController = UISearchController(searchResultsController: nil)
+    private let tableView = UITableView()
+    private var searchBarTest = UISearchBar()
+    private var isSearhBarEmpty: Bool {
+        return searchBarTest.text?.isEmpty ?? true
+    }
     
     // MARK: - Init ContactsListController
     init(viewModel: ContactsListViewModel) {
         self.viewModel = viewModel
-        super.init(style: .plain)
+        super.init(nibName: nil, bundle: nil)
         self.view.backgroundColor = .darkslategray
     }
     
@@ -35,9 +40,10 @@ class ContactsListController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configurateTablleView()
+        configureSearchBarNew()
+        configureTablleView()
         configureNavigationBar()
-        configurateSearchBar()
+ //       configureSearchBar()
         addKeyboardEvents()
     }
     
@@ -45,14 +51,41 @@ class ContactsListController: UITableViewController {
         self.tableView.reloadData()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView?.frame.size = CGSize(width: tableView.bounds.width, height: 64)
+    }
+    
     // MARK: - Configure contact list
-    private func configurateTablleView() {
-        tableView?.backgroundColor = UIColor.white
-        tableView?.register(ContactTableCell.self,
-                            forCellReuseIdentifier: recipeCellReuseIdentifier)
+    private func configureTablleView() {
+        self.view.addSubview(tableView)
+        tableView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.snp.top).offset((self.navigationController?.navigationBar.bounds.height ?? 64) + 64)
+            make.left.equalTo(self.view.snp.left)
+            make.bottom.equalTo(self.view.snp.bottom)
+            make.right.equalTo(self.view.snp.right)
+        }
+        tableView.backgroundColor = UIColor.white
+        tableView.register(ContactTableCell.self,
+                           forCellReuseIdentifier: contactCellReuseIdentifier)
         tableView.showsHorizontalScrollIndicator = false
-        tableView.showsHorizontalScrollIndicator = false
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.tableFooterView = UIView()
+    }
+    
+    private func configureSearchBarNew() {
+        self.view.addSubview(searchBarTest)
+        searchBarTest.snp.makeConstraints { (make) in
+            make.top.equalTo(self.view.snp.top).offset(self.navigationController?.navigationBar.bounds.height ?? 64)
+            make.width.equalTo(self.view.snp.width)
+            make.height.equalTo(64)
+        }
+        searchBarTest.delegate = self
+        searchBarTest.barTintColor = UIColor.white
+        searchBarTest.tintColor = UIColor.appPrimary
+        searchBarTest.backgroundColor = .appPrimary
+        
     }
     
     private func configureNavigationBar() {
@@ -68,7 +101,8 @@ class ContactsListController: UITableViewController {
         navigationItem.title = "Contact List"
     }
     
-    private func configurateSearchBar() {
+    private func configureSearchBar() {
+     //   tableView.tableHeaderView = searchController.searchBar
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
@@ -78,16 +112,16 @@ class ContactsListController: UITableViewController {
         searchController.searchBar.backgroundColor = .appPrimary
         
         definesPresentationContext = true
-        tableView.tableHeaderView = searchController.searchBar
+        print("Test")
     }
     
     private func addKeyboardEvents() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillChange(notification:)),
+                                               selector: #selector(keyboardWillShow(notification:)),
                                                name: Notification.Name.UIKeyboardWillShow,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillChange(notification:)),
+                                               selector: #selector(keyboardWillHide(notification:)),
                                                name: Notification.Name.UIKeyboardWillHide,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
@@ -104,26 +138,25 @@ class ContactsListController: UITableViewController {
         viewModel.showNewContactViewController()
     }
     
-    private func searhBarIsEmpty() -> Bool {
-        return searchController.searchBar.text?.isEmpty ?? true
-    }
-    
-    @objc private func keyboardWillChange(notification: Notification) {
-        print("keyboard will show: \(notification.name.rawValue)")
-        
+    @objc private func keyboardWillShow(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
-        
-        if notification.name == Notification.Name.UIKeyboardWillShow ||
-            notification.name == Notification.Name.UIKeyboardWillChangeFrame {
-            tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+    }
+    
+    @objc private func keyboardWillChange(notification: Notification) {
+        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+    }
+    
+    @objc private func keyboardWillHide(notification: Notification) {
+        if #available(iOS 11.0, *) {
+            self.tableView.contentInset = .zero
         } else {
-            if #available(iOS 11.0, *) {
-                tableView.contentInset = .zero
-            } else {
-                tableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
-            }
+            self.tableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
         }
     }
     
@@ -133,49 +166,49 @@ class ContactsListController: UITableViewController {
 }
 
 // MARK: - UITableView DataSource
-extension ContactsListController {
+extension ContactsListController: UITableViewDataSource, UITableViewDelegate {
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel?.numberOfSections() ?? 0
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel?.numberOfRows(numberOfRowsInSection: section) ?? 0
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: recipeCellReuseIdentifier,
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: contactCellReuseIdentifier,
                                                        for: indexPath)
             as? ContactTableCell else { return UITableViewCell(style: .default,
-                                                         reuseIdentifier: recipeCellReuseIdentifier) }
+                                                         reuseIdentifier: contactCellReuseIdentifier) }
         guard let cellViewModel = viewModel?.cellViewModel(forIndexPath: indexPath) else { return cell }
         cell.updateDataForCell(viewModel: cellViewModel)
         cell.selectionStyle = .none
         return cell
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
         return Constant.cellHeight
     }
     
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let viewModel = viewModel else {
             return
         }
         viewModel.selectRow(atIndexPath: indexPath)
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return viewModel?.titleForHeader(InSection: section)
     }
     
-    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 30
     }
     
-    override func sectionIndexTitles(for tableView: UITableView) -> [String]? {
+    func sectionIndexTitles(for tableView: UITableView) -> [String]? {
         return viewModel?.getIndexTitles()
     }
 }
@@ -184,7 +217,7 @@ extension ContactsListController {
 extension ContactsListController: UISearchResultsUpdating {
     
     func updateSearchResults(for searchController: UISearchController) {
-        if !searhBarIsEmpty() {
+        if !self.isSearhBarEmpty {
             guard let searchText = searchController.searchBar.text else { return }
             viewModel?.filterContentForSearchText(searchText)
             tableView.reloadData()
@@ -206,5 +239,27 @@ extension ContactsListController: UISearchBarDelegate {
         searchBar.endEditing(true)
         viewModel?.cancelSearchingProcess()
         self.tableView.reloadData()
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        if !self.isSearhBarEmpty {
+            guard let searchText = searchBarTest.text else { return }
+            viewModel?.filterContentForSearchText(searchText)
+            tableView.reloadData()
+        } else {
+            viewModel?.cancelSearchingProcess()
+            tableView.reloadData()
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        if !self.isSearhBarEmpty {
+            guard let searchText = searchBarTest.text else { return }
+            viewModel?.filterContentForSearchText(searchText)
+            tableView.reloadData()
+        } else {
+            viewModel?.cancelSearchingProcess()
+            tableView.reloadData()
+        }
     }
 }

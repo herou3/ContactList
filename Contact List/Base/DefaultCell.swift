@@ -5,8 +5,9 @@
 import UIKit
 
 class DefaultCell: UITableViewCell {
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: .default, reuseIdentifier: "contactId")
+        super.init(style: .default, reuseIdentifier: reuseIdentifier)
         setupViews()
     }
     

@@ -12,25 +12,20 @@ class ContactNoteCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Propertie
     var value: String?
-    var selectedTextView: (() -> Void)?
     
     // MARK: - init / deinit
-    init(value: AnyObject) {
+    init(value: String?) {
         self.configure(with: value)
     }
     
     // MARK: - Configure cell
-    func configure(with value: AnyObject) {
-        guard let value = value as? String else { return }
+    func configure(with value: String?) {
+        guard let value = value else { return }
         self.value = value
     }
     
     // MARK: - bind to Detail view model
     func changeData(with text: String?) {
         self.value = text
-    }
-    
-    func selectTextView() {
-        selectedTextView?()
     }
 }

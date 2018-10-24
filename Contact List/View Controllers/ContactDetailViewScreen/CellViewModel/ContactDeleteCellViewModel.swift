@@ -15,7 +15,7 @@ class ContactDeleteCellViewModel: ContactCellViewModelProtocol {
     var deleteTap: (() -> Void)?
     
     // MARK: - Init / Deinit
-    init(value: AnyObject, deleteAction: @escaping (() -> Void)) {
+    init(value: String?) {
         self.configure(with: value)
         self.deleteTap = deleteAction
     }
@@ -23,7 +23,7 @@ class ContactDeleteCellViewModel: ContactCellViewModelProtocol {
     // MARK: - Methods ContactCellViewModelProtocol
     func changeData(with text: String?) { }
     
-    func configure(with value: AnyObject) {
+    func configure(with value: String?) {
         self.value = "Delete Contact"
     }
     

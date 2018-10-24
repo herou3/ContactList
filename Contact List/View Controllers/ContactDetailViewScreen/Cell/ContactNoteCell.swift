@@ -11,8 +11,7 @@ import SnapKit
 
 class ContactNoteCell: DefaultCell {
     // MARK: - Properties
-    private var changeText: ((_ text: String?) -> Void)?
-    private var viewModel: ContactNoteCellViewModel?
+    var changeText: ((_ text: String?) -> Void)?
     
     // MARK: - Init table
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -33,7 +32,7 @@ class ContactNoteCell: DefaultCell {
         return inputLabel
     }()
     
-    private var inputTextView: UITextView = {
+    var inputTextView: UITextView = {
         let inputTextView = UITextView()
         inputTextView.textColor = .slategray
         inputTextView.font = UIFont.systemFont(ofSize: 20)
@@ -72,15 +71,7 @@ class ContactNoteCell: DefaultCell {
     }
     
     func configure(with viewModel: ContactNoteCellViewModel) {
-        self.viewModel = viewModel
         setupViews()
-        
-        changeText = { [weak viewModel] text in
-            viewModel?.changeData(with: text)
-        }
-        viewModel.selectedTextView = { [] in
-            self.inputTextView.becomeFirstResponder()
-        }
         typeInputLabel.text = "Note"
         inputTextView.text = viewModel.value
     }

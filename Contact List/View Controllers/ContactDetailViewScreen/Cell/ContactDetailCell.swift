@@ -7,9 +7,8 @@ import SnapKit
 
 class ContactDetailCell: DefaultCell {
     // MARK: - Properties
-    private var changeText: ((_ text: String?) -> Void)?
+    var changeText: ((_ text: String?) -> Void)?
     private var didTapReturnButton: (() -> Void)?
-    private var viewModel: ContactDetailCellViewModel?
     private var typeCell: TypeCell?
     private var value: String {
         return inputTextField.text ?? ""
@@ -34,7 +33,7 @@ class ContactDetailCell: DefaultCell {
         return inputLabel
     }()
     
-    private var inputTextField: UITextField = {
+    var inputTextField: UITextField = {
         let inputTextField = UITextField()
         inputTextField.textColor = .slategray
         inputTextField.font = UIFont.systemFont(ofSize: 20)
@@ -128,24 +127,11 @@ class ContactDetailCell: DefaultCell {
     }
     
     func configure(with viewModel: ContactDetailCellViewModel) {
-        self.viewModel = viewModel
         self.typeCell = viewModel.typeCell
-        
         setupViews()
-        
         didTapReturnButton = { [weak viewModel] in
             viewModel?.requestTapReturnAction()
         }
-        
-        viewModel.selectedTextField = { [] in
-            self.inputTextField.becomeFirstResponder()
-        }
-        
-        changeText = { [weak viewModel] text in
-            self.onDidEndEditText(with: viewModel?.typeCell)
-            viewModel?.changeData(with: text)
-        }
-        
         typeInputLabel.text = typeCell?.description
         if typeCell == .phone {
             inputTextField.keyboardType = .phonePad
@@ -155,10 +141,6 @@ class ContactDetailCell: DefaultCell {
     }
     
     // MARK: - Bind to viewModel
-    func onDidEndEditText(with typeCell: TypeCell?) {
-        viewModel?.value = value
-    }
-    
     @objc private func onDidUpdateText(_ textField: UITextField) {
         changeText?(textField.text)
     }
@@ -183,7 +165,9 @@ extension ContactDetailCell: UITextFieldDelegate {
         return true
     }
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    func textField(_ textField: UITextField,
+                   shouldChangeCharactersIn range: NSRange,
+                   replacementString string: String) -> Bool {
         
         if typeCell == .phone {
             

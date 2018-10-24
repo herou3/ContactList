@@ -1,5 +1,5 @@
 //
-//  ContactSongCellViewModel.swift
+//  ContactSoundCellViewModel.swift
 //  Contact List
 //
 //  Created by Pavel Kurilov on 20.09.2018.
@@ -8,21 +8,20 @@
 
 import Foundation
 
-class ContactSongCellViewModel: ContactCellViewModelProtocol {
+class ContactSoundCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Propertie
     var value: String?
-    var changeSong: ((_ text: String?) -> Void)?
+    var changeSound: (() -> Void)?
     
     // MARK: - init / deinit
-    init(value: AnyObject, changeData: @escaping ((_ text: String?) -> Void)) {
+    init(value: String?) {
         self.configure(with: value)
-        changeSong = changeData
     }
     
     // MARK: - Configure cell
-    func configure(with value: AnyObject) {
-        guard let value = value as? String else { return }
+    func configure(with value: String?) {
+        guard let value = value  else { return }
         self.value = value
     }
     
@@ -32,6 +31,6 @@ class ContactSongCellViewModel: ContactCellViewModelProtocol {
     }
     
     func requestAction() {
-        self.changeSong?("test")
+        self.changeSound?()
     }
 }

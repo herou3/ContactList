@@ -14,8 +14,9 @@ class ContactTableCellViewModel: ContactTableCellViewModelProtocol {
     private var contact: Contact
    
     var fullName: String {
-        let firstName = contact.firstName ?? " "
-        let lastName = contact.lastName ?? " "
+        
+        guard let firstName = contact.firstName else { return "\(contact.lastName ?? "")" }
+        guard let lastName = contact.lastName else { return "\(contact.firstName ?? "")"}
         return firstName + " " + lastName
     }
     

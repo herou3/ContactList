@@ -1,5 +1,5 @@
 //
-//  String.swift
+//  String+Contains.swift
 //  Contact List
 //
 //  Created by Pavel Kurilov on 09.10.2018.
@@ -11,7 +11,7 @@ import Foundation
 extension String {
     
     func contains(find: String?) -> Bool {
-        let find = find ?? "test"
-        return self.range(of: find) != nil
+        guard let containString = find else { return false }
+        return self.range(of: containString) != nil
     }
 }

@@ -11,7 +11,7 @@ class ContactDetailController: UIViewController {
     private var contactDetailViewModel: ContactDetailViewModel?
     private let detailCellReuse = "cellIdDetail"
     private let cellNoteId = "cellNoteId"
-    private let cellSongId = "cellSongId"
+    private let cellSoundId = "cellSoundId"
     private let cellDeleteId = "cellDeleteId"
     private let dataTableView: UITableView = UITableView()
     
@@ -35,32 +35,15 @@ class ContactDetailController: UIViewController {
         super.viewDidLoad()
         configureContactDetailController()
         self.view.backgroundColor = .darkslategray
+        self.tapOnTheReturnButtonAction()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.contactDetailViewModel?.onDidUpdateSong(songName: contactDetailViewModel?.song)
+        self.contactDetailViewModel?.onDidUpdateSound(soundName: contactDetailViewModel?.sound)
         self.dataTableView.reloadData()
     }
     
     // MARK: - Configure contact detail controller
-    private func configureNavigationBar() {
-        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
-        
-        navigationController?.navigationBar.barTintColor = .silver
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = .black
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationItem.title = contactDetailViewModel?.firstName ?? ""
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "",
-                                                           style: .plain,
-                                                           target: nil,
-                                                           action: nil)
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save",
-                                                            style: .done,
-                                                            target: self,
-                                                            action: #selector(saveObject))
-    }
-    
     private func configureContactDetailView() {
         contactDetailView.bounds = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 206)
     }
@@ -80,7 +63,7 @@ class ContactDetailController: UIViewController {
         dataTableView.separatorStyle = .none
         dataTableView.register(ContactDetailCell.self, forCellReuseIdentifier: detailCellReuse)
         dataTableView.register(ContactNoteCell.self, forCellReuseIdentifier: cellNoteId)
-        dataTableView.register(ContactSongCell.self, forCellReuseIdentifier: cellSongId)
+        dataTableView.register(ContactSoundCell.self, forCellReuseIdentifier: cellSoundId)
         dataTableView.register(ContactDeleteCell.self, forCellReuseIdentifier: cellDeleteId)
         dataTableView.tableHeaderView = contactDetailView
         contactDetailView.addGestureRecognizer(configureGesture())
@@ -88,11 +71,11 @@ class ContactDetailController: UIViewController {
     
     private func addKeyboardEvents() {
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillChange(notification:)),
+                                               selector: #selector(keyboardWillShow(notification:)),
                                                name: Notification.Name.UIKeyboardWillShow,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
-                                               selector: #selector(keyboardWillChange(notification:)),
+                                               selector: #selector(keyboardWillHide(notification:)),
                                                name: Notification.Name.UIKeyboardWillHide,
                                                object: nil)
         NotificationCenter.default.addObserver(self,
@@ -102,7 +85,6 @@ class ContactDetailController: UIViewController {
     }
     
     private func configureContactDetailController() {
-        configureNavigationBar()
         configureContactDetailView()
         addDataTableView()
         addKeyboardEvents()
@@ -119,7 +101,8 @@ class ContactDetailController: UIViewController {
     }
     
     private func hideKeyboardOutsideTap() {
-        let hideKeyboardGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        let hideKeyboardGesture: UITapGestureRecognizer = UITapGestureRecognizer(target: self,
+                                                                                 action: #selector(dismissKeyboard))
         self.view.addGestureRecognizer(hideKeyboardGesture)
     }
     
@@ -159,14 +142,13 @@ class ContactDetailController: UIViewController {
     }
     
     private func chooseImagePickerAction(source: UIImagePickerControllerSourceType) {
-        if UIImagePickerController.isSourceTypeAvailable(source) {
-            let imagePicker = UIImagePickerController()
-            imagePicker.delegate = self
-            imagePicker.allowsEditing = true
-            imagePicker.sourceType = source
-            self.present(imagePicker, animated: true) {
-                self.view.endEditing(true)
-            }
+        guard UIImagePickerController.isSourceTypeAvailable(source) else { return }
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.allowsEditing = true
+        imagePicker.sourceType = source
+        self.present(imagePicker, animated: true) {
+            self.view.endEditing(true)
         }
     }
     
@@ -174,15 +156,43 @@ class ContactDetailController: UIViewController {
     private func bindTo(_ viewModel: ContactDetailViewModel) {
         self.contactDetailViewModel = viewModel
         contactDetailView.updateImage(image: viewModel.image)
-        contactDetailViewModel?.changeSong = { [unowned self] in
-            self.contactDetailViewModel?.onDidShowPicker()
-        }
         contactDetailViewModel?.deleteContact = { [unowned self] in
-            Alert.returnDefaultAlert(on: self,
+            Alert.defaultAlert(on: self,
                                      with: "Delete",
                                      message: "Do you want to delete this contact?", action: {
                                         self.contactDetailViewModel?.onDidGetRequestDelete()
             })
+        }
+    }
+    // MARK: - Return barButtonItem
+    func barButtonItem(typeButton: TypeItemButton) -> UIBarButtonItem {
+        switch typeButton {
+        case .back:
+            return UIBarButtonItem(title: "<",
+                                   style: .plain,
+                                   target: nil,
+                                   action: nil)
+        default:
+            return UIBarButtonItem(title: "Save",
+                                   style: .done,
+                                   target: self,
+                                   action: #selector(saveObject))
+        }
+    }
+    
+    // MARK: - Methods tap on the return
+    private func tapOnTheReturnButtonAction() {
+        contactDetailViewModel?.didRequestTapReturn = { [] value in
+            let indexPathNextCell = IndexPath(row: value,
+                                              section: 0)
+            guard let detailCell = self.dataTableView.cellForRow(at: indexPathNextCell) as? ContactDetailCell else {
+                guard let noteCell = self.dataTableView.cellForRow(at: indexPathNextCell) as? ContactNoteCell else {
+                    return
+                }
+                noteCell.inputTextView.becomeFirstResponder()
+                return
+            }
+            detailCell.inputTextField.becomeFirstResponder()
         }
     }
     
@@ -191,22 +201,25 @@ class ContactDetailController: UIViewController {
         contactDetailViewModel?.saveContact()
     }
     
-    @objc private func keyboardWillChange(notification: Notification) {
-        print("keyboard will show: \(notification.name.rawValue)")
-        
+    @objc private func keyboardWillShow(notification: Notification) {
         guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
             return
         }
-        
-        if notification.name == Notification.Name.UIKeyboardWillShow ||
-            notification.name == Notification.Name.UIKeyboardWillChangeFrame {
-            dataTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+        dataTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+    }
+    
+    @objc private func keyboardWillChange(notification: Notification) {
+        guard let keyboardRect = (notification.userInfo?[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue else {
+            return
+        }
+        dataTableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardRect.height, right: 0)
+    }
+    
+    @objc private func keyboardWillHide(notification: Notification) {
+        if #available(iOS 11.0, *) {
+            dataTableView.contentInset = .zero
         } else {
-            if #available(iOS 11.0, *) {
-                dataTableView.contentInset = .zero
-            } else {
-                dataTableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
-            }
+            dataTableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
         }
     }
     
@@ -245,39 +258,42 @@ extension ContactDetailController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let detailCellVM = contactDetailViewModel?.detailCellViewModel(forIndexPath: indexPath) ??
-            ContactDetailCellViewModel(value: contactDetailViewModel!,
-                                       typeCell: .name)
-
-        guard let cellSong = tableView.dequeueReusableCell(withIdentifier: cellSongId, for: indexPath)
-            as? ContactSongCell else { return UITableViewCell(style: .default,
-                                                              reuseIdentifier: cellSongId) }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: detailCellReuse,
-                                                       for: indexPath)
-            as? ContactDetailCell else { return UITableViewCell(style: .default,
-                                                               reuseIdentifier: detailCellReuse) }
-        guard let cellNote = tableView.dequeueReusableCell(withIdentifier: cellNoteId,
-                                                           for: indexPath) as?
-            ContactNoteCell else { return UITableViewCell(style: .default,
-                                                reuseIdentifier: cellNoteId)}
-        guard let cellDelete = tableView.dequeueReusableCell(withIdentifier: cellDeleteId,
-                                                           for: indexPath) as?
-            ContactDeleteCell else { return UITableViewCell(style: .default,
-                                                          reuseIdentifier: cellDeleteId)}
+            ContactDetailCellViewModel(value: contactDetailViewModel?.note, typeCell: .name)
+        
+        guard let cellSound = tableView.dequeueReusableCell(withIdentifier: cellSoundId, for: indexPath)
+            as? ContactSoundCell else { return UITableViewCell(style: .default, reuseIdentifier: cellSoundId) }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: detailCellReuse, for: indexPath)
+            as? ContactDetailCell else { return UITableViewCell(style: .default, reuseIdentifier: detailCellReuse) }
+        guard let cellNote = tableView.dequeueReusableCell(withIdentifier: cellNoteId, for: indexPath)
+            as? ContactNoteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellNoteId)}
+        guard let cellDelete = tableView.dequeueReusableCell(withIdentifier: cellDeleteId, for: indexPath)
+            as? ContactDeleteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellDeleteId)}
         
         if let detailCellViewModel = detailCellVM as? ContactDetailCellViewModel {
             cell.configure(with: detailCellViewModel)
+            cell.changeText = { [] text in
+                detailCellViewModel.changeData(with: text)
+            }
             return cell
-        } else if let songCellViewModel = detailCellVM as? ContactSongCellViewModel {
-            cellSong.configure(with: songCellViewModel)
-            return cellSong
+        } else if let songCellViewModel = detailCellVM as? ContactSoundCellViewModel {
+            cellSound.configure(with: songCellViewModel)
+            cellSound.changeSound = { [] in
+                songCellViewModel.requestAction()
+            }
+            return cellSound
         } else if let noteCellViewModel = detailCellVM as? ContactNoteCellViewModel {
             cellNote.configure(with: noteCellViewModel)
+            cellNote.changeText = { [] text in
+                noteCellViewModel.changeData(with: text)
+            }
             return cellNote
         } else {
             let deleteCellViewModel = detailCellVM as? ContactDeleteCellViewModel
             cellDelete.configure(with: deleteCellViewModel)
+            cellDelete.deleteTap = { [] in
+                deleteCellViewModel?.deleteAction()
+            }
             return cellDelete
         }
     }

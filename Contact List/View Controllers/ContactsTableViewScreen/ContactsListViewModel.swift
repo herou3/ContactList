@@ -9,10 +9,10 @@
 import Foundation
 import RealmSwift
 
-protocol  ContactsListViewModelDelegate: class {
+protocol ContactsListViewModelDelegate: class {
     
     func contactListViewModel(_ viewModel: ContactsListViewModel, didSelectContact contact: Contact)
-    func addContactAction()
+    func contactListViewModelDidReqestSelectEmptyContact(_ viewModel: ContactsListViewModel)
 }
 
 class ContactsListViewModel: ContactsListViewModelProtocol {
@@ -44,21 +44,21 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
                                                               phoneNumber: "924186",
                                                               image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
                                                               note: "Continue",
-                                                              song: "fasf",
+                                                              sound: "fasf",
                                                               id: UUID().uuidString), in: realm),
                          RealmContact.from(transient: Contact(firstName: "User",
                                                               lastName: "Test",
                                                               phoneNumber: "355",
                                                               image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
                                                               note: "Test",
-                                                              song: "Song",
+                                                              sound: "Sound",
                                                               id: UUID().uuidString), in: realm),
                          RealmContact.from(transient: Contact(firstName: "Corn",
                                                               lastName: "Track",
                                                               phoneNumber: "355",
                                                               image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
                                                               note: "Test",
-                                                              song: "Song",
+                                                              sound: "Sound",
                                                               id: UUID().uuidString), in: realm)]
         
         if realm.objects(RealmContact.self).isEmpty {
@@ -107,9 +107,19 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     
     func filterContentForSearchText(_ searchText: String) {
         searchingContacts = contacts.filter({ contact -> Bool in
+            
+            let fullName: String? = (contact.firstName ?? "") + " " + (contact.lastName ?? "")
+            
             guard let isLastNameContact = contact.lastName?.lowercased().contains(find:
                 searchText.lowercased()) else { return false }
-            return isLastNameContact
+            guard let isFirstNameContact = contact.firstName?.lowercased().contains(find:
+                searchText.lowercased()) else { return false }
+            guard let isFullName = fullName?.lowercased().contains(find:
+                searchText.lowercased()) else { return false }
+            guard let isPhoneNumber = contact.phoneNumber?.lowercased().contains(find:
+                searchText.lowercased()) else { return false }
+            
+            return isFirstNameContact || isLastNameContact || isFullName || isPhoneNumber
         })
     }
     
@@ -151,7 +161,7 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     }
     
     func showNewContactViewController() {
-        delegate?.addContactAction()
+        delegate?.contactListViewModelDidReqestSelectEmptyContact(self)
     }
     
     private func makeDataSource(contacts: [Contact]) {

@@ -20,7 +20,7 @@ final class RealmContact: Object {
     @objc dynamic var phoneNumber: String?
     @objc dynamic var imageData: Data?
     @objc dynamic var note: String?
-    @objc dynamic var song: String?
+    @objc dynamic var sound: String?
     @objc dynamic var id: String = ""
     
     // MARK: - Methods
@@ -47,7 +47,7 @@ final class RealmContact: Object {
         realmContact.phoneNumber = transient.phoneNumber
         realmContact.imageData = transient.image
         realmContact.note = transient.note
-        realmContact.song = transient.song
+        realmContact.sound = transient.sound
         
         return realmContact
     }
@@ -59,14 +59,14 @@ final class RealmContact: Object {
                                 phoneNumber: "",
                                 image: Data(),
                                 note: "",
-                                song: "",
+                                sound: "",
                                 id: UUID().uuidString)
         
         transient.firstName = firstName
         transient.lastName = lastName
         transient.phoneNumber = phoneNumber
         transient.note = note
-        transient.song = song
+        transient.sound = sound
         transient.id = id
         transient.image = imageData
         

@@ -16,13 +16,18 @@ final class ContactsListCoordinator {
     
     // MARK: - Properties
     private weak var navigationController: UINavigationController?
-    private var changeSongValue: ((_ text: String) -> Void)?
+    private var changeSoundValue: ((_ text: String) -> Void)?
     private var changeContact: ((_ contact: Contact?) -> Void)?
     private var deleteContact: ((_ contact: Contact?) -> Void)?
     
     // MARK: - Init
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        self.navigationController?.navigationBar.barTintColor = .silver
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.tintColor = .black
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
     }
     
     func start() {
@@ -47,34 +52,47 @@ final class ContactsListCoordinator {
     
     private func showDetailContact(_ contact: Contact) {
         let viewModel = ContactDetailViewModel(contact: contact)
-        let controller = ContactDetailController(viewModel: viewModel)
+        let detailController = ContactDetailController(viewModel: viewModel)
         viewModel.delegate = self
-        self.changeSongValue = { data in
-            viewModel.song = data
+        self.changeSoundValue = { data in
+            viewModel.sound = data
         }
-        navigationController?.pushViewController(controller, animated: true)
+        detailController.navigationItem.title = viewModel.contactName()
+        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(typeButton: .done)
+        navigationController?.pushViewController(detailController, animated: true)
     }
     
     private func showDetailEmptyContact() {
         let emptyDetailEmptyViewModel = ContactDetailViewModel(contact: Contact())
-        let controller = ContactDetailController(viewModel: emptyDetailEmptyViewModel)
+        let detailController = ContactDetailController(viewModel: emptyDetailEmptyViewModel)
         emptyDetailEmptyViewModel.delegate = self
-        self.changeSongValue = { data in
-            emptyDetailEmptyViewModel.song = data
+        self.changeSoundValue = { data in
+            emptyDetailEmptyViewModel.sound = data
         }
-        navigationController?.pushViewController(controller, animated: true)
+        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(typeButton: .done)
+        detailController.navigationItem.title = "New Contact"
+        navigationController?.pushViewController(detailController, animated: true)
     }
     
-    private func showSongPickerController() {
-        let songViewModel = SongPickerViewModel()
-        songViewModel.delegate = self
-        let songController = SongPickerController(viewModel: songViewModel)
-        let navController = UINavigationController(rootViewController: songController)
+    private func showSoundPickerController() {
+        let soundViewModel = SoundPickerViewModel()
+        soundViewModel.delegate = self
+        let soundController = SoundPickerController(viewModel: soundViewModel)
+        let navController = UINavigationController(rootViewController: soundController)
+        
+        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
+        soundController.navigationController?.navigationBar.barTintColor = .silver
+        soundController.navigationController?.navigationBar.shadowImage = UIImage()
+        soundController.navigationController?.navigationBar.tintColor = .black
+        soundController.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        soundController.navigationItem.title = "Choise Sound"
+        soundController.navigationItem.rightBarButtonItem = soundController.barButtonItem(type: .done)
+        soundController.navigationItem.leftBarButtonItem = soundController.barButtonItem(type: .close)
         navigationController?.present(navController, animated: true, completion: nil)
     }
     
-    private func dismissSongPickerController(songValue: String) {
-        changeSongValue?(songValue)
+    private func dismissSoundPickerController(soundValue: String) {
+        changeSoundValue?(soundValue)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
@@ -82,10 +100,10 @@ final class ContactsListCoordinator {
 // MARK: - Extension ContactsListViewModelDelegate
 extension ContactsListCoordinator: ContactsListViewModelDelegate {
     
-    func addContactAction() {
+    func contactListViewModelDidReqestSelectEmptyContact(_ viewModel: ContactsListViewModel) {
         showDetailEmptyContact()
     }
-    
+
     func contactListViewModel(_ viewModel: ContactsListViewModel, didSelectContact contact: Contact) {
         showDetailContact(contact)
     }
@@ -94,23 +112,23 @@ extension ContactsListCoordinator: ContactsListViewModelDelegate {
 // MARK: - Extension ContactDetailViewModelDelegate
 extension ContactsListCoordinator: ContactDetailViewModelDelegate {
     
-    func deleteContact(_ contact: Contact?) {
-        deleteContact?(contact)
-    }
-    
-    func getContact(_ contact: Contact?) {
+    func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didSaveContact contact: Contact?) {
         changeContact?(contact)
     }
     
-    func songPickerViewModel() {
-        showSongPickerController()
+    func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didDeleteContact contact: Contact?) {
+        deleteContact?(contact)
+    }
+    
+    func contactDetailViewModelDidReqestShowSoundPicker(_ viewMidel: ContactDetailViewModel) {
+        showSoundPickerController()
     }
 }
 
-// MARK: - Extension SongPickerViewModelDelegate
-extension ContactsListCoordinator: SongPickerViewModelDelegate {
+// MARK: - Extension SoundPickerViewModelDelegate
+extension ContactsListCoordinator: SoundPickerViewModelDelegate {
     
-    func saveChoisedSong(valueSong: String) {
-        dismissSongPickerController(songValue: valueSong)
+    func soundPickerViewModel(_ viewModel: SoundPickerViewModel, didSaveChoisenSound soundValue: String) {
+        dismissSoundPickerController(soundValue: soundValue)
     }
 }

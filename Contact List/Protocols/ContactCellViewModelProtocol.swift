@@ -13,5 +13,5 @@ protocol  ContactCellViewModelProtocol {
     var value: String? { get set}
     
     func changeData(with text: String?)
-    func configure(with value: AnyObject)
+    func configure(with value: String?)
 }
