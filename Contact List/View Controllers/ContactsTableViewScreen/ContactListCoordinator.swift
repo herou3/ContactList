@@ -16,9 +16,9 @@ final class ContactsListCoordinator {
     
     // MARK: - Properties
     private weak var navigationController: UINavigationController?
-    private var changeSoundValue: ((_ text: String) -> Void)?
-    private var changeContact: ((_ contact: Contact?) -> Void)?
-    private var deleteContact: ((_ contact: Contact?) -> Void)?
+    private var changeSoundValueBlock: ((_ text: String) -> Void)?
+    private var changeContactBlock: ((_ contact: Contact?) -> Void)?
+    private var deleteContactBlock: ((_ contact: Contact?) -> Void)?
     
     // MARK: - Init
     init(navigationController: UINavigationController) {
@@ -39,11 +39,11 @@ final class ContactsListCoordinator {
         let contactsViewModel = ContactsListViewModel()
         contactsViewModel.delegate = self
         let controller = ContactsListController(viewModel: contactsViewModel)
-        self.changeContact = { data in
+        self.changeContactBlock = { data in
             contactsViewModel.updateContacts(newContact: data)
             self.navigationController?.popToRootViewController(animated: true)
         }
-        self.deleteContact = { data in
+        self.deleteContactBlock = { data in
             contactsViewModel.deleteContact(contact: data)
             self.navigationController?.popToRootViewController(animated: true)
         }
@@ -54,7 +54,7 @@ final class ContactsListCoordinator {
         let viewModel = ContactDetailViewModel(contact: contact)
         let detailController = ContactDetailController(viewModel: viewModel)
         viewModel.delegate = self
-        self.changeSoundValue = { data in
+        self.changeSoundValueBlock = { data in
             viewModel.sound = data
         }
         detailController.navigationItem.title = viewModel.contactName()
@@ -66,7 +66,7 @@ final class ContactsListCoordinator {
         let emptyDetailEmptyViewModel = ContactDetailViewModel(contact: Contact())
         let detailController = ContactDetailController(viewModel: emptyDetailEmptyViewModel)
         emptyDetailEmptyViewModel.delegate = self
-        self.changeSoundValue = { data in
+        self.changeSoundValueBlock = { data in
             emptyDetailEmptyViewModel.sound = data
         }
         detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(typeButton: .done)
@@ -92,7 +92,7 @@ final class ContactsListCoordinator {
     }
     
     private func dismissSoundPickerController(soundValue: String) {
-        changeSoundValue?(soundValue)
+        changeSoundValueBlock?(soundValue)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }
@@ -113,11 +113,11 @@ extension ContactsListCoordinator: ContactsListViewModelDelegate {
 extension ContactsListCoordinator: ContactDetailViewModelDelegate {
     
     func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didSaveContact contact: Contact?) {
-        changeContact?(contact)
+        changeContactBlock?(contact)
     }
     
     func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didDeleteContact contact: Contact?) {
-        deleteContact?(contact)
+        deleteContactBlock?(contact)
     }
     
     func contactDetailViewModelDidReqestShowSoundPicker(_ viewMidel: ContactDetailViewModel) {

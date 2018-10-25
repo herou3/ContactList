@@ -1,8 +1,8 @@
 //
-//  Realm.swift
+//  Realm+Init.swift
 //  Contact List
 //
-//  Created by Pavel Kurilov on 15.10.2018.
+//  Created by Pavel Kurilov on 25.10.2018.
 //  Copyright © 2018 Pavel Kurilov. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 extension Realm {
-    
+
     class func inMemoryStore(inMemoryIdentifier: String = Constant.realmInMemoryStoreIdentifier) -> Realm {
         do {
             let realm = try Realm(configuration: Realm.Configuration(inMemoryIdentifier: inMemoryIdentifier))
@@ -32,5 +32,4 @@ extension Realm {
             fatalError("Error while creating Realm persistent store: \(error)")
         }
     }
-    
 }

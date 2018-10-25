@@ -617,24 +617,8 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailController.swift"
-            timestampString = "562147959.367135"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "219"
-            endingLineNumber = "219"
-            landmarkName = "keyboardWillHide(notification:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewScreen/Cell/ContactDetailCell.swift"
-            timestampString = "562147959.367278"
+            timestampString = "562191851.787856"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "150"
@@ -650,7 +634,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewScreen/Cell/ContactDetailCell.swift"
-            timestampString = "562147959.367348"
+            timestampString = "562191851.787944"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "163"
@@ -666,55 +650,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-            timestampString = "562147959.367413"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "70"
-            endingLineNumber = "70"
-            landmarkName = "makeCellsViewModel()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Contact_List.ContactDetailViewModel.(makeCellsViewModel in _A5986401A866B76D1703A2CE872C63AC)() -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-                  timestampString = "562147959.473929"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "70"
-                  endingLineNumber = "70"
-                  offsetFromSymbolStart = "260">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Contact_List.ContactDetailViewModel.(makeCellsViewModel in _A5986401A866B76D1703A2CE872C63AC)() -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-                  timestampString = "562147959.475951"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "71"
-                  endingLineNumber = "71"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-            timestampString = "562147959.367467"
+            timestampString = "562191851.787994"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "140"
@@ -730,7 +666,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactListCoordinator.swift"
-            timestampString = "562147959.367522"
+            timestampString = "562191851.788045"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
@@ -745,109 +681,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-            timestampString = "562147959.3675669"
+            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
+            timestampString = "562191851.788089"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
-            landmarkName = "makeCellsViewModel()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-            timestampString = "562147959.367613"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
-            landmarkName = "makeCellsViewModel()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Contact_List.ContactDetailViewModel.(makeCellsViewModel in _A5986401A866B76D1703A2CE872C63AC)() -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-                  timestampString = "562147959.493615"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "114"
-                  endingLineNumber = "114"
-                  offsetFromSymbolStart = "5236">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #7 () -&gt; () in Contact_List.ContactDetailViewModel.(makeCellsViewModel in _A5986401A866B76D1703A2CE872C63AC)() -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-                  timestampString = "562147959.495455"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "115"
-                  endingLineNumber = "115"
-                  offsetFromSymbolStart = "20">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactDetailViewScreen/ContactDetailViewModel.swift"
-            timestampString = "562147959.3676569"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "makeCellsViewModel()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListController.swift"
-            timestampString = "562147959.367704"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "220"
-            endingLineNumber = "220"
-            landmarkName = "searchBarTextDidEndEditing(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListController.swift"
-            timestampString = "562147959.367754"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
-            landmarkName = "searchBar(_:textDidChange:)"
+            startingLineNumber = "143"
+            endingLineNumber = "143"
+            landmarkName = "updateContacts(newContact:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -858,60 +698,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
-            timestampString = "562147959.3678041"
+            timestampString = "562191851.78815"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "filterContentForSearchText(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Contact_List.ContactsListViewModel.filterContentForSearchText(Swift.String) -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
-                  timestampString = "562147959.512834"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "111"
-                  endingLineNumber = "111"
-                  offsetFromSymbolStart = "44">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Contact_List.Contact) -&gt; Swift.Bool in Contact_List.ContactsListViewModel.filterContentForSearchText(Swift.String) -&gt; ()"
-                  moduleName = "Contact List"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/View%20Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
-                  timestampString = "562147959.514679"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "113"
-                  endingLineNumber = "113"
-                  offsetFromSymbolStart = "36">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListController.swift"
-            timestampString = "562147959.368331"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
-            landmarkName = "configureSearchBarNew()"
+            startingLineNumber = "155"
+            endingLineNumber = "155"
+            landmarkName = "deleteContact(contact:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -922,11 +714,379 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
-            timestampString = "562147959.368384"
+            timestampString = "562191851.788203"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "147"
+            endingLineNumber = "147"
+            landmarkName = "updateContacts(newContact:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
+            timestampString = "562191851.788256"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
+            landmarkName = "updateContacts(newContact:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
+            timestampString = "562191851.788307"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "139"
+            endingLineNumber = "139"
+            landmarkName = "updateContacts(newContact:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
+            timestampString = "562191851.7883559"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "145"
+            endingLineNumber = "145"
+            landmarkName = "updateContacts(newContact:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788409"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "21"
+            endingLineNumber = "21"
+            landmarkName = "saveObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788466"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "18"
+            endingLineNumber = "18"
+            landmarkName = "saveObject(object:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Contact_List.RealmWrapper.saveObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.340812"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (RealmSwift.Realm) -&gt; () in Contact_List.RealmWrapper.saveObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.3435481"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788518"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "saveObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788568"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "saveObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788618"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "19"
+            endingLineNumber = "19"
+            landmarkName = "saveObject(object:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Contact_List.RealmWrapper.saveObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.365559"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "19"
+                  endingLineNumber = "19"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (RealmSwift.Realm) -&gt; () in Contact_List.RealmWrapper.saveObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.368358"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "16"
+                  endingLineNumber = "16"
+                  offsetFromSymbolStart = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Base/RealmWrapper.swift"
+            timestampString = "562191851.7886699"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "41"
+            endingLineNumber = "41"
+            landmarkName = "writeAsync(completion:writeBlock:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.7887141"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "26"
+            endingLineNumber = "26"
+            landmarkName = "deleteObject(object:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "default argument 1 of Contact_List.RealmWrapper.deleteObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.3824019"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Contact_List.RealmWrapper.deleteObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.3853641"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "30">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788757"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "deleteObject(object:completion:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Contact_List.RealmWrapper.deleteObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.39345"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "30">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (RealmSwift.Realm) -&gt; () in Contact_List.RealmWrapper.deleteObject&lt;A where A: Contact_List.TransientEntity, A.RealmType: RealmSwift.Object&gt;(object: A, completion: Swift.Optional&lt;() -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "Contact List"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/pavelkurilov/Library/Mobile%20Documents/com~apple~CloudDocs/Contact%20List/Contact%20List/Extensions/RealmWrapper+ChangeData.swift"
+                  timestampString = "562191852.395981"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "26"
+                  endingLineNumber = "26"
+                  offsetFromSymbolStart = "46">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788801"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "deleteObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788842"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "deleteObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/Extensions/RealmWrapper+ChangeData.swift"
+            timestampString = "562191851.788883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "deleteObject(object:completion:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Contact List/View Controllers/ContactsTableViewScreen/ContactsListViewModel.swift"
+            timestampString = "562191851.788926"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "init()"
             landmarkType = "7">
          </BreakpointContent>

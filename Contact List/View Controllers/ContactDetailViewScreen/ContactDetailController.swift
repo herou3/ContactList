@@ -156,7 +156,7 @@ class ContactDetailController: UIViewController {
     private func bindTo(_ viewModel: ContactDetailViewModel) {
         self.contactDetailViewModel = viewModel
         contactDetailView.updateImage(image: viewModel.image)
-        contactDetailViewModel?.deleteContact = { [unowned self] in
+        contactDetailViewModel?.deleteContactBlock = { [unowned self] in
             Alert.defaultAlert(on: self,
                                      with: "Delete",
                                      message: "Do you want to delete this contact?", action: {
@@ -182,7 +182,7 @@ class ContactDetailController: UIViewController {
     
     // MARK: - Methods tap on the return
     private func tapOnTheReturnButtonAction() {
-        contactDetailViewModel?.didRequestTapReturn = { [] value in
+        contactDetailViewModel?.didRequestTapBlock = { [] value in
             let indexPathNextCell = IndexPath(row: value,
                                               section: 0)
             guard let detailCell = self.dataTableView.cellForRow(at: indexPathNextCell) as? ContactDetailCell else {
@@ -236,7 +236,7 @@ extension ContactDetailController: UIImagePickerControllerDelegate, UINavigation
         image = image.resizeWithWidth(width: 700) ?? image
         let resizeImage = UIImageJPEGRepresentation(image, 0)
         contactDetailView.updateImage(image: UIImage(data: resizeImage ?? Data()))
-        contactDetailViewModel?.updateImage?(UIImage(data: resizeImage ?? Data()))
+        contactDetailViewModel?.updateImageBlock?(UIImage(data: resizeImage ?? Data()))
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -272,26 +272,26 @@ extension ContactDetailController: UITableViewDataSource {
         
         if let detailCellViewModel = detailCellVM as? ContactDetailCellViewModel {
             cell.configure(with: detailCellViewModel)
-            cell.changeText = { [] text in
+            cell.changeTextBlock = { [] text in
                 detailCellViewModel.changeData(with: text)
             }
             return cell
         } else if let songCellViewModel = detailCellVM as? ContactSoundCellViewModel {
             cellSound.configure(with: songCellViewModel)
-            cellSound.changeSound = { [] in
+            cellSound.changeSoundBlock = { [] in
                 songCellViewModel.requestAction()
             }
             return cellSound
         } else if let noteCellViewModel = detailCellVM as? ContactNoteCellViewModel {
             cellNote.configure(with: noteCellViewModel)
-            cellNote.changeText = { [] text in
+            cellNote.changeTextBlock = { [] text in
                 noteCellViewModel.changeData(with: text)
             }
             return cellNote
         } else {
             let deleteCellViewModel = detailCellVM as? ContactDeleteCellViewModel
             cellDelete.configure(with: deleteCellViewModel)
-            cellDelete.deleteTap = { [] in
+            cellDelete.deleteRequestBlock = { [] in
                 deleteCellViewModel?.deleteAction()
             }
             return cellDelete

@@ -58,7 +58,7 @@ class ContactsListController: UIViewController {
     private func configureTablleView() {
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.top).offset((self.navigationController?.navigationBar.bounds.height ?? 64) + 64)
+            make.top.equalTo(self.view.snp.top).offset((self.navigationController?.navigationBar.bounds.height ?? 64) + 80)
             make.left.equalTo(self.view.snp.left)
             make.bottom.equalTo(self.view.snp.bottom)
             make.right.equalTo(self.view.snp.right)
@@ -75,7 +75,7 @@ class ContactsListController: UIViewController {
     private func configureSearchBarNew() {
         self.view.addSubview(searchBar)
         searchBar.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.top).offset(self.navigationController?.navigationBar.bounds.height ?? 64)
+            make.top.equalTo(self.view.snp.top).offset(self.navigationController?.navigationBar.bounds.height ?? 80)
             make.width.equalTo(self.view.snp.width)
             make.height.equalTo(64)
         }

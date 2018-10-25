@@ -12,12 +12,12 @@ class ContactDeleteCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Properties
     var value: String?
-    var deleteTap: (() -> Void)?
+    var deleteRequestBlock: (() -> Void)?
     
     // MARK: - Init / Deinit
     init(value: String?) {
         self.configure(with: value)
-        self.deleteTap = deleteAction
+        self.deleteRequestBlock = deleteAction
     }
     
     // MARK: - Methods ContactCellViewModelProtocol
@@ -29,6 +29,6 @@ class ContactDeleteCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Internal Methods
     func deleteAction() {
-        self.deleteTap?()
+        self.deleteRequestBlock?()
     }
 }

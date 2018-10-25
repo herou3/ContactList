@@ -11,7 +11,7 @@ import SnapKit
 
 class ContactNoteCell: DefaultCell {
     // MARK: - Properties
-    var changeText: ((_ text: String?) -> Void)?
+    var changeTextBlock: ((_ text: String?) -> Void)?
     
     // MARK: - Init table
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -78,7 +78,7 @@ class ContactNoteCell: DefaultCell {
     
     // MARK: - Bind to viewModel
     @objc private func onDidUpdateText(_ textView: UITextView) {
-        changeText?(textView.text)
+        changeTextBlock?(textView.text)
     }
 }
 
@@ -92,6 +92,6 @@ extension ContactNoteCell: UITextViewDelegate {
     }
     
     func textViewDidChange(_ textView: UITextView) {
-        changeText?(textView.text)
+        changeTextBlock?(textView.text)
     }
 }

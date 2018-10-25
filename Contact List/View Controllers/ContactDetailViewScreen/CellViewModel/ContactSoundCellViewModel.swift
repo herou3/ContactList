@@ -12,7 +12,7 @@ class ContactSoundCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Propertie
     var value: String?
-    var changeSound: (() -> Void)?
+    var changeSoundBlock: (() -> Void)?
     
     // MARK: - init / deinit
     init(value: String?) {
@@ -31,6 +31,6 @@ class ContactSoundCellViewModel: ContactCellViewModelProtocol {
     }
     
     func requestAction() {
-        self.changeSound?()
+        self.changeSoundBlock?()
     }
 }

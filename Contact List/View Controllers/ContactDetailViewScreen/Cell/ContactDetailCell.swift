@@ -7,8 +7,8 @@ import SnapKit
 
 class ContactDetailCell: DefaultCell {
     // MARK: - Properties
-    var changeText: ((_ text: String?) -> Void)?
-    private var didTapReturnButton: (() -> Void)?
+    var changeTextBlock: ((_ text: String?) -> Void)?
+    private var didTapReturnButtonBlock: (() -> Void)?
     private var typeCell: TypeCell?
     private var value: String {
         return inputTextField.text ?? ""
@@ -129,7 +129,7 @@ class ContactDetailCell: DefaultCell {
     func configure(with viewModel: ContactDetailCellViewModel) {
         self.typeCell = viewModel.typeCell
         setupViews()
-        didTapReturnButton = { [weak viewModel] in
+        didTapReturnButtonBlock = { [weak viewModel] in
             viewModel?.requestTapReturnAction()
         }
         typeInputLabel.text = typeCell?.description
@@ -142,12 +142,12 @@ class ContactDetailCell: DefaultCell {
     
     // MARK: - Bind to viewModel
     @objc private func onDidUpdateText(_ textField: UITextField) {
-        changeText?(textField.text)
+        changeTextBlock?(textField.text)
     }
     
     // MARK: - Methods for toolBar
     @objc private func tapNextButton(_ sendor: UIBarButtonItem) {
-        didTapReturnButton?()
+        didTapReturnButtonBlock?()
     }
     
     @objc private func dismissKeyboard() {
@@ -160,7 +160,7 @@ extension ContactDetailCell: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 
-        didTapReturnButton?()
+        didTapReturnButtonBlock?()
         
         return true
     }

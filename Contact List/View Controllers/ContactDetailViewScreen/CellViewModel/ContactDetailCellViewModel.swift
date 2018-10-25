@@ -9,7 +9,7 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
     // MARK: - Propertie
     var value: String?
     var typeCell: TypeCell?
-    var requestTapReturn: (() -> Void)?
+    var requestTapBlock: (() -> Void)?
     
     // MARK: - init / deinit
     init(value: String?, typeCell: TypeCell) {
@@ -36,6 +36,6 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
     }
     
     func requestTapReturnAction() {
-        requestTapReturn?()
+        requestTapBlock?()
     }
 }

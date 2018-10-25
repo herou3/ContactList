@@ -22,53 +22,49 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     private var searchingContacts: [Contact] = [] {
         didSet {
             makeDataSource(contacts: searchingContacts)
-            makeData(contacts: searchingContacts)
         }
     }
     private var contacts: [Contact] = [] {
         didSet {
             searchingContacts = contacts
             makeDataSource(contacts: searchingContacts)
-            makeData(contacts: searchingContacts)
         }
     }
-    private var contactsList: [ContactsBySymbol?] = []
-    let realm: Realm
-    private var realmContacts: [RealmContact]
+    private var contactsList: [ContactsBySymbol] = []
+    var realm: Realm
+    private var contactsExample: [Contact]
     private var realmObjects: Results<RealmContact>!
     private var selectedIndexPath: IndexPath?
-    private var dictionaryOfContacts = [(String, [Contact])]()
     private var indexTitles = [String]()
+    private var realmWrapper = RealmWrapper()
     
     init() {
         realm = Realm.persistentStore()
-        realmContacts = [RealmContact.from(transient: Contact(firstName: "Pavel",
-                                                              lastName: "Kurilov",
-                                                              phoneNumber: "924186",
-                                                              image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
-                                                              note: "Continue",
-                                                              sound: "fasf",
-                                                              id: UUID().uuidString), in: realm),
-                         RealmContact.from(transient: Contact(firstName: "User",
-                                                              lastName: "Test",
-                                                              phoneNumber: "355",
-                                                              image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
-                                                              note: "Test",
-                                                              sound: "Sound",
-                                                              id: UUID().uuidString), in: realm),
-                         RealmContact.from(transient: Contact(firstName: "Corn",
-                                                              lastName: "Track",
-                                                              phoneNumber: "355",
-                                                              image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
-                                                              note: "Test",
-                                                              sound: "Sound",
-                                                              id: UUID().uuidString), in: realm)]
+        contactsExample = [Contact(firstName: "Pavel",
+                                 lastName: "Kurilov",
+                                 phoneNumber: "924186",
+                                 image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
+                                 note: "Continue",
+                                 sound: "fasf",
+                                 id: UUID().uuidString),
+                         Contact(firstName: "User",
+                                 lastName: "Test",
+                                 phoneNumber: "355",
+                                 image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
+                                 note: "Test",
+                                 sound: "Sound",
+                                 id: UUID().uuidString),
+                         Contact(firstName: "Corn",
+                                 lastName: "Track",
+                                 phoneNumber: "355",
+                                 image: UIImagePNGRepresentation(#imageLiteral(resourceName: "sova")),
+                                 note: "Test",
+                                 sound: "Sound",
+                                 id: UUID().uuidString)]
         
         if realm.objects(RealmContact.self).isEmpty {
-            for realmContact in realmContacts {
-                try? realm.write {
-                    realm.add(realmContact)
-                }
+            for contact in contactsExample {
+                realmWrapper.saveObject(object: contact)
             }
         }
         
@@ -78,40 +74,44 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         }
         
         searchingContacts = contacts
-        self.makeData(contacts: searchingContacts)
         self.makeDataSource(contacts: searchingContacts)
     }
 
     // MARK: - Protocols methods
     func numberOfRows(numberOfRowsInSection section: Int) -> Int {
-        let valueString = dictionaryOfContacts[section].1
+        let valueString = contactsList[section].contacts
         return valueString.count
     }
     
     func numberOfSections() -> Int {
-        return dictionaryOfContacts.count
+        
+        return contactsList.count
     }
     
     func getIndexTitles() -> [String] {
+        
         return self.indexTitles
     }
     
     func titleForHeader(InSection section: Int) -> String {
-        return dictionaryOfContacts[section].0
+        
+        return String(describing: contactsList[section].symbol)
     }
     
     func cellViewModel(forIndexPath indexPath: IndexPath) -> ContactTableCellViewModelProtocol? {
-        return ContactTableCellViewModel(contact: dictionaryOfContacts[indexPath.section].1[indexPath.row])
+        
+        return ContactTableCellViewModel(contact: contactsList[indexPath.section].contacts[indexPath.row])
     }
     
     func selectRow(atIndexPath indexPath: IndexPath) {
+        
         self.selectedIndexPath = indexPath
-        delegate?.contactListViewModel(self, didSelectContact: dictionaryOfContacts[indexPath.section].1[indexPath.row])
+        delegate?.contactListViewModel(self, didSelectContact: contactsList[indexPath.section].contacts[indexPath.row])
     }
     
     func filterContentForSearchText(_ searchText: String) {
+        
         searchingContacts = contacts.filter({ contact -> Bool in
-            
             let fullName: String? = (contact.firstName ?? "") + " " + (contact.lastName ?? "")
             
             guard let isLastNameContact = contact.lastName?.lowercased().contains(find:
@@ -136,18 +136,13 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         guard let newContact = newContact else { return }
         if !(contacts.map { $0.id }.contains(newContact.id)) {
             contacts.append(newContact)
-            try? realm.write {
-                realm.add(RealmContact.from(transient: newContact, in: realm))
-            }
+            realmWrapper.saveObject(object: newContact)
         } else {
             let index = contacts.index(where: {$0.id == newContact.id })
             guard let curentIndex = index else { return }
             contacts[curentIndex] = newContact
             for obj in realm.objects(RealmContact.self) where obj.id == contacts[curentIndex].id {
-                try? self.realm.write {
-                    let realmContact = RealmContact.from(transient: contacts[curentIndex], in: realm)
-                    self.realm.add(realmContact)
-                }
+                realmWrapper.saveObject(object: self.contacts[curentIndex])
             }
         }
     }
@@ -157,9 +152,7 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         let index = contacts.index(where: {$0.id == contact.id })
         guard let curentIndex = index else { return }
         for obj in realm.objects(RealmContact.self) where obj.id == contacts[curentIndex].id {
-            try? self.realm.write {
-                self.realm.delete(obj)
-            }
+            realmWrapper.deleteObject(object: obj.transient())
         }
         contacts.remove(at: curentIndex)
     }
@@ -168,14 +161,20 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         delegate?.contactListViewModelDidReqestSelectEmptyContact(self)
     }
     
-    private func makeData(contacts: [Contact]) {
+    private func makeDataSource(contacts: [Contact]) {
         var contactsByCharacters = [ContactsBySymbol]()
+        self.indexTitles = []
+        guard contacts.count - 1 >= 0 else {
+            self.contactsList = []
+            return
+        }
         for numberContact in 0...contacts.count-1 {
             let symbolOfContact: Character
             symbolOfContact = contacts[numberContact].lastName?.first ?? "#"
             let numberElementInContactsByCharacters = numberOfComprise(isComprise: contactsByCharacters, symbol: symbolOfContact)
             guard let numberValue = numberElementInContactsByCharacters else {
                 contactsByCharacters.append(ContactsBySymbol(symbol: symbolOfContact, contacts: []))
+                self.indexTitles.append(String(describing: symbolOfContact))
                 let numberNewElement = contactsByCharacters.count - 1
                 contactsByCharacters[numberNewElement].contacts.append(contacts[numberContact])
                 continue
@@ -183,8 +182,8 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
             contactsByCharacters[numberValue].contacts.append(contacts[numberContact])
             contactsByCharacters[numberValue].contacts =
                 contactsByCharacters[numberValue].contacts.sorted(by: { (contactFirst, contactSecond) -> Bool in
-                let valueOne = contactFirst?.lastName ?? "#Undefined"
-                let valueTwo = contactSecond?.lastName ?? "#Undefined"
+                let valueOne = contactFirst.lastName ?? "#Undefined"
+                let valueTwo = contactSecond.lastName ?? "#Undefined"
                 if valueOne < valueTwo {
                     return true
                 } else {
@@ -192,10 +191,10 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
                 }
             })
         }
-        contactsByCharacters = contactsByCharacters.sorted { (symbolFirst, symbolSecond) -> Bool in
-            let valueOne = symbolFirst.symbol ?? "#"
-            let valueTwo = symbolSecond.symbol ?? "#"
-            if valueOne < valueTwo {
+            contactsByCharacters = contactsByCharacters.sorted { (symbolFirst, symbolSecond) -> Bool in
+            let valueOne = symbolFirst.symbol
+            let valueTwo = symbolSecond.symbol
+            if valueOne > valueTwo {
                 return true
             } else {
                 return false
@@ -204,60 +203,9 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         contactsList = contactsByCharacters
     }
     
-    private func makeDataSource(contacts: [Contact]) {
-        
-        var dictionary = [String: [Contact]]()
-        let letters = NSCharacterSet.letters
-        for contact in contacts {
-            let value: Character
-            value = contact.lastName?.first ?? "#"
-            var key = String(describing: value)
-            key = isKeyCharacter(key: key, letters: letters) ? key : "#"
-            if let keyValue = dictionary[key] {
-                var filteredValue = keyValue
-                filteredValue.append(contact)
-                filteredValue = filteredValue.sorted(by: { (contactFirst, contactSecond) -> Bool in
-                    let valueOne = contactFirst.lastName ?? "#Undefined"
-                    let valueTwo = contactSecond.lastName ?? "#Undefined"
-                    if valueOne < valueTwo {
-                        return true
-                    } else {
-                        return false
-                    }
-                })
-                dictionary[key] = filteredValue
-            } else {
-                let filtered = [contact]
-                dictionary[key] = filtered
-            }
-        }
-        self.dictionaryOfContacts = Array(dictionary).sorted {$0.0 < $1.0}
-        self.indexTitles = Array(dictionary.keys.sorted(by: <))
-        
-        if !self.dictionaryOfContacts.isEmpty {
-            let temp = self.dictionaryOfContacts[0]
-            self.dictionaryOfContacts.removeFirst()
-            self.dictionaryOfContacts.append(temp)
-        }
-        
-        if !self.dictionaryOfContacts.isEmpty {
-            let tempIndex = self.indexTitles[0]
-            self.indexTitles.removeFirst()
-            self.indexTitles.append(tempIndex)
-        }
-    }
-    
-    private func isKeyCharacter(key: String, letters: CharacterSet) -> Bool {
-        let range = key.rangeOfCharacter(from: letters)
-        if var _ = range {
-            return true
-        }
-        return false
-    }
-    
     private func numberOfComprise(isComprise contactsBySymbol: [ContactsBySymbol], symbol: Character) -> Int? {
         guard !contactsBySymbol.isEmpty else { return nil }
-    //    var symbolValue: Character? = symbol
+        guard contactsBySymbol.count - 1 >= 0 else { return nil }
         for number in 0...contactsBySymbol.count - 1 where symbol == contactsBySymbol[number].symbol {
             return number
         }

@@ -10,8 +10,8 @@ import Foundation
 
 struct ContactsBySymbol {
     // MARK: - Properties
-    var symbol: Character?
-    var contacts: [Contact?]
+    var symbol: Character
+    var contacts: [Contact]
     
     init(symbol: Character, contacts: [Contact]) {
         self.symbol = symbol

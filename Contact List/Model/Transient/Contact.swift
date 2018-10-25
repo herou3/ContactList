@@ -4,7 +4,10 @@
 
 import Foundation
 
-struct Contact {
+struct Contact: TransientEntity {
+    
+    typealias RealmType = RealmContact
+    
     // MARK: - Properties
     var firstName: String?
     var lastName: String?

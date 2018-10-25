@@ -11,7 +11,7 @@ import SnapKit
 
 class  ContactSoundCell: DefaultCell {
     // MARK: - Properties
-    var changeSound: (() -> Void)?
+    var changeSoundBlock: (() -> Void)?
 
     // MARK: - Init table
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -85,6 +85,6 @@ class  ContactSoundCell: DefaultCell {
     
     // MARK: - Bind to viewModel
     @objc private func onDidChangeSound(_ sender: UIButton) {
-        changeSound?()
+        changeSoundBlock?()
     }
 }

@@ -9,10 +9,10 @@
 import Foundation
 import RealmSwift
 
-final class RealmContact: Object {
+final class RealmContact: Object, RealmEntity {
     
     // MARK: - Properties
-    typealias TransientType = Constant
+    typealias TransientType = Contact
     private static let taskPrimaryKey = "id"
 
     @objc dynamic var firstName: String?

@@ -12,7 +12,7 @@ import SnapKit
 class ContactDeleteCell: DefaultCell {
     
     // MARK: - Properties
-    var deleteTap: (() -> Void)?
+    var deleteRequestBlock: (() -> Void)?
     
     // MARK: - Init / Deintit
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
@@ -62,6 +62,6 @@ class ContactDeleteCell: DefaultCell {
     
     // MARK: - Bind to viewModel
     @objc private func onDidDeleteAction(_ sender: UIButton) {
-        deleteTap?()
+        deleteRequestBlock?()
     }
 }
