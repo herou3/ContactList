@@ -19,6 +19,7 @@
 		AB969C482174BFBA00FEC469 /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C472174BFBA00FEC469 /* Realm.swift */; };
 		AB969C4E2177043100FEC469 /* UIImage+Resize.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB969C4D2177043100FEC469 /* UIImage+Resize.swift */; };
 		AB969C502179911100FEC469 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB969C4F2179911100FEC469 /* Assets.xcassets */; };
+		ABB13FE12181814F002F4455 /* ContactsBySymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB13FE02181814F002F4455 /* ContactsBySymbol.swift */; };
 		ABB867A12153735A00E3FCA5 /* ContactNoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A02153735900E3FCA5 /* ContactNoteCell.swift */; };
 		ABB867A4215373CA00E3FCA5 /* ContactNoteCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A3215373CA00E3FCA5 /* ContactNoteCellViewModel.swift */; };
 		ABB867A6215373E300E3FCA5 /* ContactSoundCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABB867A5215373E300E3FCA5 /* ContactSoundCellViewModel.swift */; };
@@ -72,6 +73,7 @@
 		AB969C472174BFBA00FEC469 /* Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
 		AB969C4D2177043100FEC469 /* UIImage+Resize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Resize.swift"; sourceTree = "<group>"; };
 		AB969C4F2179911100FEC469 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		ABB13FE02181814F002F4455 /* ContactsBySymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsBySymbol.swift; sourceTree = "<group>"; };
 		ABB867A02153735900E3FCA5 /* ContactNoteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNoteCell.swift; sourceTree = "<group>"; };
 		ABB867A3215373CA00E3FCA5 /* ContactNoteCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactNoteCellViewModel.swift; sourceTree = "<group>"; };
 		ABB867A5215373E300E3FCA5 /* ContactSoundCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSoundCellViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			isa = PBXGroup;
 			children = (
 				ABEB6E762129617D0029E248 /* Contact.swift */,
+				ABB13FE02181814F002F4455 /* ContactsBySymbol.swift */,
 			);
 			path = Transient;
 			sourceTree = "<group>";
@@ -462,6 +465,7 @@
 				AB969C4E2177043100FEC469 /* UIImage+Resize.swift in Sources */,
 				ABCF6EDF213403C9004E2831 /* UIColor+AppColors.swift in Sources */,
 				AB969BF8215A2D9C00FEC469 /* ContactCellViewModelProtocol.swift in Sources */,
+				ABB13FE12181814F002F4455 /* ContactsBySymbol.swift in Sources */,
 				ABC29BE3212D26AA00945270 /* ContactDetailCell.swift in Sources */,
 				ABEB6E772129617D0029E248 /* Contact.swift in Sources */,
 				AB969C44216DD93700FEC469 /* ContactDeleteCell.swift in Sources */,

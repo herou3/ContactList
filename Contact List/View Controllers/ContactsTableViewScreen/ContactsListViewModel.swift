@@ -22,14 +22,17 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     private var searchingContacts: [Contact] = [] {
         didSet {
             makeDataSource(contacts: searchingContacts)
+            makeData(contacts: searchingContacts)
         }
     }
     private var contacts: [Contact] = [] {
         didSet {
             searchingContacts = contacts
             makeDataSource(contacts: searchingContacts)
+            makeData(contacts: searchingContacts)
         }
     }
+    private var contactsList: [ContactsBySymbol?] = []
     let realm: Realm
     private var realmContacts: [RealmContact]
     private var realmObjects: Results<RealmContact>!
@@ -75,6 +78,7 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         }
         
         searchingContacts = contacts
+        self.makeData(contacts: searchingContacts)
         self.makeDataSource(contacts: searchingContacts)
     }
 
@@ -164,6 +168,42 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         delegate?.contactListViewModelDidReqestSelectEmptyContact(self)
     }
     
+    private func makeData(contacts: [Contact]) {
+        var contactsByCharacters = [ContactsBySymbol]()
+        for numberContact in 0...contacts.count-1 {
+            let symbolOfContact: Character
+            symbolOfContact = contacts[numberContact].lastName?.first ?? "#"
+            let numberElementInContactsByCharacters = numberOfComprise(isComprise: contactsByCharacters, symbol: symbolOfContact)
+            guard let numberValue = numberElementInContactsByCharacters else {
+                contactsByCharacters.append(ContactsBySymbol(symbol: symbolOfContact, contacts: []))
+                let numberNewElement = contactsByCharacters.count - 1
+                contactsByCharacters[numberNewElement].contacts.append(contacts[numberContact])
+                continue
+            }
+            contactsByCharacters[numberValue].contacts.append(contacts[numberContact])
+            contactsByCharacters[numberValue].contacts =
+                contactsByCharacters[numberValue].contacts.sorted(by: { (contactFirst, contactSecond) -> Bool in
+                let valueOne = contactFirst?.lastName ?? "#Undefined"
+                let valueTwo = contactSecond?.lastName ?? "#Undefined"
+                if valueOne < valueTwo {
+                    return true
+                } else {
+                    return false
+                }
+            })
+        }
+        contactsByCharacters = contactsByCharacters.sorted { (symbolFirst, symbolSecond) -> Bool in
+            let valueOne = symbolFirst.symbol ?? "#"
+            let valueTwo = symbolSecond.symbol ?? "#"
+            if valueOne < valueTwo {
+                return true
+            } else {
+                return false
+            }
+        }
+        contactsList = contactsByCharacters
+    }
+    
     private func makeDataSource(contacts: [Contact]) {
         
         var dictionary = [String: [Contact]]()
@@ -210,10 +250,17 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     private func isKeyCharacter(key: String, letters: CharacterSet) -> Bool {
         let range = key.rangeOfCharacter(from: letters)
         if var _ = range {
-            //Your key is an alphabet
             return true
         }
         return false
     }
-
+    
+    private func numberOfComprise(isComprise contactsBySymbol: [ContactsBySymbol], symbol: Character) -> Int? {
+        guard !contactsBySymbol.isEmpty else { return nil }
+    //    var symbolValue: Character? = symbol
+        for number in 0...contactsBySymbol.count - 1 where symbol == contactsBySymbol[number].symbol {
+            return number
+        }
+        return nil
+    }
 }

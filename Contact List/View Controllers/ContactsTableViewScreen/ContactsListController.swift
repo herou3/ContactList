@@ -14,11 +14,10 @@ class ContactsListController: UIViewController {
     // MARK: - Properties
     private var viewModel: ContactsListViewModelProtocol?
     private let contactCellReuseIdentifier = "cellId"
-    private let searchController = UISearchController(searchResultsController: nil)
     private let tableView = UITableView()
-    private var searchBarTest = UISearchBar()
+    private var searchBar = UISearchBar()
     private var isSearhBarEmpty: Bool {
-        return searchBarTest.text?.isEmpty ?? true
+        return searchBar.text?.isEmpty ?? true
     }
     
     // MARK: - Init ContactsListController
@@ -43,7 +42,6 @@ class ContactsListController: UIViewController {
         configureSearchBarNew()
         configureTablleView()
         configureNavigationBar()
- //       configureSearchBar()
         addKeyboardEvents()
     }
     
@@ -75,17 +73,16 @@ class ContactsListController: UIViewController {
     }
     
     private func configureSearchBarNew() {
-        self.view.addSubview(searchBarTest)
-        searchBarTest.snp.makeConstraints { (make) in
+        self.view.addSubview(searchBar)
+        searchBar.snp.makeConstraints { (make) in
             make.top.equalTo(self.view.snp.top).offset(self.navigationController?.navigationBar.bounds.height ?? 64)
             make.width.equalTo(self.view.snp.width)
             make.height.equalTo(64)
         }
-        searchBarTest.delegate = self
-        searchBarTest.barTintColor = UIColor.white
-        searchBarTest.tintColor = UIColor.appPrimary
-        searchBarTest.backgroundColor = .appPrimary
-        
+        searchBar.delegate = self
+        searchBar.barTintColor = UIColor.white
+        searchBar.tintColor = UIColor.appPrimary
+        searchBar.backgroundColor = .appPrimary
     }
     
     private func configureNavigationBar() {
@@ -99,20 +96,6 @@ class ContactsListController: UIViewController {
                                                             action: #selector(addNewContactAction(_:)))
         navigationItem.rightBarButtonItem?.tintColor = .black
         navigationItem.title = "Contact List"
-    }
-    
-    private func configureSearchBar() {
-     //   tableView.tableHeaderView = searchController.searchBar
-        
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
-        searchController.searchBar.barTintColor = UIColor.white
-        searchController.searchBar.tintColor = UIColor.appPrimary
-        searchController.searchBar.backgroundColor = .appPrimary
-        
-        definesPresentationContext = true
-        print("Test")
     }
     
     private func addKeyboardEvents() {
@@ -213,21 +196,6 @@ extension ContactsListController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-// MARK: - extension UISearchResultsUpdating
-extension ContactsListController: UISearchResultsUpdating {
-    
-    func updateSearchResults(for searchController: UISearchController) {
-        if !self.isSearhBarEmpty {
-            guard let searchText = searchController.searchBar.text else { return }
-            viewModel?.filterContentForSearchText(searchText)
-            tableView.reloadData()
-        } else {
-            viewModel?.cancelSearchingProcess()
-            tableView.reloadData()
-        }
-    }
-}
-
 // MARK: - extension UISearchBarDelegate
 extension ContactsListController: UISearchBarDelegate {
     
@@ -235,15 +203,22 @@ extension ContactsListController: UISearchBarDelegate {
         searchBar.endEditing(true)
     }
     
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        searchBar.setShowsCancelButton(true, animated: true)
+        return true
+    }
+    
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         searchBar.endEditing(true)
         viewModel?.cancelSearchingProcess()
         self.tableView.reloadData()
+        searchBar.showsCancelButton = false
+        searchBar.text = ""
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         if !self.isSearhBarEmpty {
-            guard let searchText = searchBarTest.text else { return }
+            guard let searchText = searchBar.text else { return }
             viewModel?.filterContentForSearchText(searchText)
             tableView.reloadData()
         } else {
@@ -254,7 +229,7 @@ extension ContactsListController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         if !self.isSearhBarEmpty {
-            guard let searchText = searchBarTest.text else { return }
+            guard let searchText = searchBar.text else { return }
             viewModel?.filterContentForSearchText(searchText)
             tableView.reloadData()
         } else {
