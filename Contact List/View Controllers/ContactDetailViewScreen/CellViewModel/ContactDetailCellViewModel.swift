@@ -8,34 +8,22 @@ class ContactDetailCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Propertie
     var value: String?
-    var typeCell: TypeCell?
-    var requestTapBlock: (() -> Void)?
+    var cellType: StandartCellType?
+    var onDidTapReturnButton: (() -> Void)?
     
     // MARK: - init / deinit
-    init(value: String?, typeCell: TypeCell) {
-        self.typeCell = typeCell
+    init(value: String?, cellType: StandartCellType) {
+        self.cellType = cellType
         self.configure(with: value)
     }
     
-    // MARK: - Configure cell
-    internal func configure(with value: String?) {
-        guard let value = value else { return }
-        switch self.typeCell {
-        case .lastName?:
-            self.value = value
-        case .name?:
-            self.value = value
-        default:
-            self.value = value
-        }
-    }
-    
-    // MARK: - bind to Detail view model
-    func changeData(with text: String?) {
+    // MARK: - Configure self
+    func configure(with text: String?) {
         self.value = text
     }
     
-    func requestTapReturnAction() {
-        requestTapBlock?()
+    // MARK: - bind to Detail view model
+    func requestSelectNextResponder() {
+        onDidTapReturnButton?()
     }
 }

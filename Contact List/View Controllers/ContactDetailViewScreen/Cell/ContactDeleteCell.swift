@@ -56,10 +56,6 @@ class ContactDeleteCell: DefaultCell {
         addDeleteButton()
     }
     
-    func configure(with viewModel: ContactDeleteCellViewModel?) {
-        setupViews()
-    }
-    
     // MARK: - Bind to viewModel
     @objc private func onDidDeleteAction(_ sender: UIButton) {
         deleteRequestBlock?()

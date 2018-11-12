@@ -14,4 +14,12 @@ extension String {
         guard let containString = find else { return false }
         return self.range(of: containString) != nil
     }
+    
+    func sanitizedPhoneNumber() -> String {
+        guard !isEmpty else { return self }
+        let range = startIndex..<index(startIndex, offsetBy: count)
+        return replacingOccurrences(of: "[^+0-9]", with: "",
+                                    options: .regularExpression,
+                                    range: range)
+    }
 }

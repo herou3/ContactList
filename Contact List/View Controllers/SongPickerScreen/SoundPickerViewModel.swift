@@ -10,7 +10,7 @@ import Foundation
 
 protocol SoundPickerViewModelDelegate: class {
     
-    func soundPickerViewModel(_ viewModel: SoundPickerViewModel, didSaveChoisenSound soundValue: String)
+    func soundPickerViewModel(_ viewModel: SoundPickerViewModel, didSaveChosenSound soundValue: String)
 }
 
 class SoundPickerViewModel: SoundPickerViewModelProtocol {
@@ -32,10 +32,14 @@ class SoundPickerViewModel: SoundPickerViewModelProtocol {
     
     // MARK: - MARK: - SoundPickerViewModelProtocol methods
     func soundValue(forRow row: Int) -> String? {
-        return soundArray[row]
+        if row < soundArray.count && row >= 0 {
+            return soundArray[row]
+        } else {
+            return "default value"
+        }
     }
     
     func saveSoundValue(_ soundValue: String) {
-        delegate?.soundPickerViewModel(self, didSaveChoisenSound: soundValue)
+        delegate?.soundPickerViewModel(self, didSaveChosenSound: soundValue)
     }
 }

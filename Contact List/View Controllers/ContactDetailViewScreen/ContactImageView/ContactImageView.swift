@@ -63,10 +63,6 @@ class ContactImageView: UIView {
     
     // MARK: - Method for update imageView
     func updateImage(image: UIImage?) {
-        if image == nil {
-            contactImageView.image = #imageLiteral(resourceName: "Portrait_placeholder")
-        } else {
-            contactImageView.image = image
-        }
+        contactImageView.image = image ?? #imageLiteral(resourceName: "Portrait_placeholder")
     }
 }

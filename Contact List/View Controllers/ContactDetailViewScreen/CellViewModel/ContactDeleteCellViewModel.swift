@@ -16,13 +16,10 @@ class ContactDeleteCellViewModel: ContactCellViewModelProtocol {
     
     // MARK: - Init / Deinit
     init(value: String?) {
-        self.configure(with: value)
         self.deleteRequestBlock = deleteAction
     }
     
     // MARK: - Methods ContactCellViewModelProtocol
-    func changeData(with text: String?) { }
-    
     func configure(with value: String?) {
         self.value = "Delete Contact"
     }

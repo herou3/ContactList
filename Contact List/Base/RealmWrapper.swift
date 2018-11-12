@@ -20,7 +20,6 @@ protocol TransientEntity {
     associatedtype RealmType: RealmEntity where RealmType.TransientType == Self
 }
 
-
 typealias VoidBlock = (() -> Void)
 typealias RealmBlock = ((Realm) -> Void)
 

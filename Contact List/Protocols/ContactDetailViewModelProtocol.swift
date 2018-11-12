@@ -13,7 +13,8 @@ protocol ContactDetailViewModelProtocol {
     var note: String? { get set }
     var image: UIImage? { get set }
     
-    func numberOfRows() -> Int
+    var numberOfRows: Int { get }
+    
     func detailCellViewModel(forIndexPath indexPath: IndexPath) -> ContactCellViewModelProtocol?
     func saveContact()
     func contactName() -> String

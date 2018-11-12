@@ -48,6 +48,8 @@ final class ContactsListCoordinator {
             self.navigationController?.popToRootViewController(animated: true)
         }
         navigationController?.pushViewController(controller, animated: false)
+        controller.navigationItem.rightBarButtonItem = controller.barButtonItem(buttonType: .add)
+        controller.navigationItem.title = "Contact List"
     }
     
     private func showDetailContact(_ contact: Contact) {
@@ -58,7 +60,7 @@ final class ContactsListCoordinator {
             viewModel.sound = data
         }
         detailController.navigationItem.title = viewModel.contactName()
-        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(typeButton: .done)
+        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(buttonType: .done)
         navigationController?.pushViewController(detailController, animated: true)
     }
     
@@ -69,7 +71,7 @@ final class ContactsListCoordinator {
         self.changeSoundValueBlock = { data in
             emptyDetailEmptyViewModel.sound = data
         }
-        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(typeButton: .done)
+        detailController.navigationItem.rightBarButtonItem = detailController.barButtonItem(buttonType: .done)
         detailController.navigationItem.title = "New Contact"
         navigationController?.pushViewController(detailController, animated: true)
     }
@@ -85,7 +87,7 @@ final class ContactsListCoordinator {
         soundController.navigationController?.navigationBar.shadowImage = UIImage()
         soundController.navigationController?.navigationBar.tintColor = .black
         soundController.navigationController?.navigationBar.titleTextAttributes = textAttributes
-        soundController.navigationItem.title = "Choise Sound"
+        soundController.navigationItem.title = "Choose Sound"
         soundController.navigationItem.rightBarButtonItem = soundController.barButtonItem(type: .done)
         soundController.navigationItem.leftBarButtonItem = soundController.barButtonItem(type: .close)
         navigationController?.present(navController, animated: true, completion: nil)
@@ -128,7 +130,7 @@ extension ContactsListCoordinator: ContactDetailViewModelDelegate {
 // MARK: - Extension SoundPickerViewModelDelegate
 extension ContactsListCoordinator: SoundPickerViewModelDelegate {
     
-    func soundPickerViewModel(_ viewModel: SoundPickerViewModel, didSaveChoisenSound soundValue: String) {
+    func soundPickerViewModel(_ viewModel: SoundPickerViewModel, didSaveChosenSound soundValue: String) {
         dismissSoundPickerController(soundValue: soundValue)
     }
 }

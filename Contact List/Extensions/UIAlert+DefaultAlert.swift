@@ -4,13 +4,12 @@
 
 import UIKit
 
-struct Alert {
+extension UIViewController {
     
     // MARK: - Show default alert
-    static func defaultAlert(on viewController: UIViewController,
-                             with title: String,
-                             message: String,
-                             action: @escaping (() -> Void)) {
+    func defaultAlert(with title: String,
+                      message: String,
+                      action: @escaping (() -> Void)) {
         let alert = UIAlertController(title: title,
                                       message: message,
                                       preferredStyle: .alert)
@@ -21,6 +20,6 @@ struct Alert {
         alert.addAction(defaultAction)
         alert.addAction(cancelAction)
         alert.view.tintColor = UIColor.darkslategray
-        viewController.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil)
     }
 }

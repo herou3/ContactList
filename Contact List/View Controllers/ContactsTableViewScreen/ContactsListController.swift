@@ -41,7 +41,6 @@ class ContactsListController: UIViewController {
         super.viewDidLoad()
         configureSearchBarNew()
         configureTablleView()
-        configureNavigationBar()
         addKeyboardEvents()
     }
     
@@ -58,7 +57,7 @@ class ContactsListController: UIViewController {
     private func configureTablleView() {
         self.view.addSubview(tableView)
         tableView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.top).offset((self.navigationController?.navigationBar.bounds.height ?? 64) + 80)
+            make.top.equalTo(searchBar.snp.bottom)
             make.left.equalTo(self.view.snp.left)
             make.bottom.equalTo(self.view.snp.bottom)
             make.right.equalTo(self.view.snp.right)
@@ -75,7 +74,11 @@ class ContactsListController: UIViewController {
     private func configureSearchBarNew() {
         self.view.addSubview(searchBar)
         searchBar.snp.makeConstraints { (make) in
-            make.top.equalTo(self.view.snp.top).offset(self.navigationController?.navigationBar.bounds.height ?? 80)
+            if #available(iOS 11.0, *) {
+                make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+            } else {
+                make.top.equalTo(self.topLayoutGuide.snp.bottom)
+            }
             make.width.equalTo(self.view.snp.width)
             make.height.equalTo(64)
         }
@@ -83,19 +86,6 @@ class ContactsListController: UIViewController {
         searchBar.barTintColor = UIColor.white
         searchBar.tintColor = UIColor.appPrimary
         searchBar.backgroundColor = .appPrimary
-    }
-    
-    private func configureNavigationBar() {
-        let textAttributes = [NSAttributedStringKey.foregroundColor: UIColor.black]
-        
-        navigationController?.navigationBar.barTintColor = .silver
-        navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.titleTextAttributes = textAttributes
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
-                                                            target: self,
-                                                            action: #selector(addNewContactAction(_:)))
-        navigationItem.rightBarButtonItem?.tintColor = .black
-        navigationItem.title = "Contact List"
     }
     
     private func addKeyboardEvents() {
@@ -139,12 +129,23 @@ class ContactsListController: UIViewController {
         if #available(iOS 11.0, *) {
             self.tableView.contentInset = .zero
         } else {
-            self.tableView.contentInset = UIEdgeInsets(top: Constant.insertFromSize, left: 0, bottom: 0, right: 0)
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
     }
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    func barButtonItem(buttonType: ItemButtonType) -> UIBarButtonItem {
+        switch buttonType {
+        case .add:
+            return UIBarButtonItem(barButtonSystemItem: .add,
+                                   target: self,
+                                   action: #selector(addNewContactAction(_:)))
+        default:
+            return UIBarButtonItem()
+        }
     }
 }
 
@@ -156,7 +157,7 @@ extension ContactsListController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel?.numberOfRows(numberOfRowsInSection: section) ?? 0
+        return viewModel?.numberOfRows(inSection: section) ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

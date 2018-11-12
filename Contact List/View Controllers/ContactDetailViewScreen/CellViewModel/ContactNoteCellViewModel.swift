@@ -18,14 +18,8 @@ class ContactNoteCellViewModel: ContactCellViewModelProtocol {
         self.configure(with: value)
     }
     
-    // MARK: - Configure cell
-    func configure(with value: String?) {
-        guard let value = value else { return }
-        self.value = value
-    }
-    
-    // MARK: - bind to Detail view model
-    func changeData(with text: String?) {
+    // MARK: - Configure self
+    func configure(with text: String?) {
         self.value = text
     }
 }

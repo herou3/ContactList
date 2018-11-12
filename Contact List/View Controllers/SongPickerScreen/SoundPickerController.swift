@@ -8,10 +8,11 @@
 
 import UIKit
 
-enum TypeItemButton {
+enum ItemButtonType {
     case done
     case close
     case back
+    case add
 }
 
 class SoundPickerController: UIViewController {
@@ -19,12 +20,12 @@ class SoundPickerController: UIViewController {
     // MARK: - Properties
     private let soundPickerViewModel: SoundPickerViewModel?
     private let soundPickerView = UIPickerView()
-    private var choisenSound: String?
+    private var chosenSound: String?
     
     // MARK: - Init / deinit
     init(viewModel: SoundPickerViewModel) {
         self.soundPickerViewModel = viewModel
-        choisenSound = self.soundPickerViewModel?.soundValue(forRow: 0)
+        chosenSound = self.soundPickerViewModel?.soundValue(forRow: 0)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -57,8 +58,11 @@ class SoundPickerController: UIViewController {
     }
     
     // MARK: - Internal methods
-    @objc private func saveChoisenSound() {
-        soundPickerViewModel?.saveSoundValue(self.choisenSound ?? "test")
+    @objc private func saveChosenSound() {
+        guard let chosenSound = self.chosenSound else {
+            return
+        }
+        soundPickerViewModel?.saveSoundValue(chosenSound)
     }
     
     @objc private func closeViewController() {
@@ -66,13 +70,13 @@ class SoundPickerController: UIViewController {
     }
     
     // MARK: - Return navigationItems
-    func barButtonItem(type: TypeItemButton) -> UIBarButtonItem {
+    func barButtonItem(type: ItemButtonType) -> UIBarButtonItem {
         switch type {
         case .done:
             return UIBarButtonItem(title: "Done",
                                    style: .done,
                                    target: self,
-                                   action: #selector(saveChoisenSound))
+                                   action: #selector(saveChosenSound))
         default:
             return UIBarButtonItem(title: "Close",
                                   style: .done,
@@ -94,7 +98,7 @@ extension SoundPickerController: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.choisenSound = self.soundPickerViewModel?.soundValue(forRow: row)
+        self.chosenSound = self.soundPickerViewModel?.soundValue(forRow: row)
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

@@ -1,4 +1,3 @@
-
 //
 //  RealmWrapper.swift
 //  Contact List

@@ -4,6 +4,10 @@
 
 import SnapKit
 
+enum ViewModelType {
+    
+}
+
 class ContactDetailController: UIViewController {
     
     // MARK: - Properties
@@ -35,11 +39,11 @@ class ContactDetailController: UIViewController {
         super.viewDidLoad()
         configureContactDetailController()
         self.view.backgroundColor = .darkslategray
-        self.tapOnTheReturnButtonAction()
+        self.bindToContactDetailViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.contactDetailViewModel?.onDidUpdateSound(soundName: contactDetailViewModel?.sound)
+        self.contactDetailViewModel?.updateSound(soundName: contactDetailViewModel?.sound)
         self.dataTableView.reloadData()
     }
     
@@ -156,17 +160,17 @@ class ContactDetailController: UIViewController {
     private func bindTo(_ viewModel: ContactDetailViewModel) {
         self.contactDetailViewModel = viewModel
         contactDetailView.updateImage(image: viewModel.image)
-        contactDetailViewModel?.deleteContactBlock = { [unowned self] in
-            Alert.defaultAlert(on: self,
-                                     with: "Delete",
-                                     message: "Do you want to delete this contact?", action: {
-                                        self.contactDetailViewModel?.onDidGetRequestDelete()
+        contactDetailViewModel?.onDidRequestOfDeleteBlock = { [unowned self] in
+            self.defaultAlert(with: "Delete",
+                              message: "Do you want to delete this contact?",
+                              action: {
+                                self.contactDetailViewModel?.getRequestDelete()
             })
         }
     }
     // MARK: - Return barButtonItem
-    func barButtonItem(typeButton: TypeItemButton) -> UIBarButtonItem {
-        switch typeButton {
+    func barButtonItem(buttonType: ItemButtonType) -> UIBarButtonItem {
+        switch buttonType {
         case .back:
             return UIBarButtonItem(title: "<",
                                    style: .plain,
@@ -181,8 +185,8 @@ class ContactDetailController: UIViewController {
     }
     
     // MARK: - Methods tap on the return
-    private func tapOnTheReturnButtonAction() {
-        contactDetailViewModel?.didRequestTapBlock = { [] value in
+    private func bindToContactDetailViewModel() {
+        contactDetailViewModel?.onDidRequestTapBlock = { [] value in
             let indexPathNextCell = IndexPath(row: value,
                                               section: 0)
             guard let detailCell = self.dataTableView.cellForRow(at: indexPathNextCell) as? ContactDetailCell else {
@@ -226,6 +230,65 @@ class ContactDetailController: UIViewController {
     @objc private func dismissKeyboard() {
         view.endEditing(true)
     }
+    
+    // MARK: - get different cells
+    func getDetailCell(with viewModel: ContactCellViewModelProtocol,
+                       and indexPath: IndexPath,
+                       in tableView: UITableView) -> UITableViewCell {
+        guard let detailCellViewModel = viewModel as? ContactDetailCellViewModel else {
+            return UITableViewCell()
+        }
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: detailCellReuse, for: indexPath)
+            as? ContactDetailCell else { return UITableViewCell(style: .default, reuseIdentifier: detailCellReuse) }
+        cell.configure(with: detailCellViewModel)
+        cell.changeTextBlock = { [] text in
+            detailCellViewModel.configure(with: text)
+        }
+        return cell
+    }
+    
+    func getNoteCell(with viewModel: ContactCellViewModelProtocol,
+                     and indexPath: IndexPath,
+                     in tableView: UITableView) -> UITableViewCell {
+        guard let noteCellViewModel = viewModel as? ContactNoteCellViewModel else {
+            return UITableViewCell()
+        }
+        guard let cellNote = tableView.dequeueReusableCell(withIdentifier: cellNoteId, for: indexPath)
+            as? ContactNoteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellNoteId)}
+        cellNote.configure(with: noteCellViewModel)
+        cellNote.changeTextBlock = { [] text in
+            noteCellViewModel.configure(with: text)
+        }
+        return cellNote
+    }
+    
+    func getSongCell(with viewModel: ContactCellViewModelProtocol,
+                     and indexPath: IndexPath,
+                     in tableView: UITableView) -> UITableViewCell {
+        guard let songCellViewModel = viewModel as? ContactSoundCellViewModel else {
+            return UITableViewCell()
+        }
+        guard let cellSound = tableView.dequeueReusableCell(withIdentifier: cellSoundId, for: indexPath)
+            as? ContactSoundCell else { return UITableViewCell(style: .default, reuseIdentifier: cellSoundId) }
+        cellSound.configure(with: songCellViewModel)
+        cellSound.changeSoundBlock = { [] in
+            songCellViewModel.requestShowSounds()
+        }
+        return cellSound
+    }
+    
+    func getDeleteCell(with viewModel: ContactCellViewModelProtocol,
+                       and indexPath: IndexPath,
+                       in tableView: UITableView) -> UITableViewCell {
+        guard let cellDelete = tableView.dequeueReusableCell(withIdentifier: cellDeleteId, for: indexPath)
+            as? ContactDeleteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellDeleteId)}
+        let deleteCellViewModel = viewModel as? ContactDeleteCellViewModel
+     //   cellDelete.configure(with: deleteCellViewModel)
+        cellDelete.deleteRequestBlock = { [] in
+            deleteCellViewModel?.deleteAction()
+        }
+        return cellDelete
+    }
 }
 
 // MARK: - Extension image picker controller
@@ -236,7 +299,7 @@ extension ContactDetailController: UIImagePickerControllerDelegate, UINavigation
         image = image.resizeWithWidth(width: 700) ?? image
         let resizeImage = UIImageJPEGRepresentation(image, 0)
         contactDetailView.updateImage(image: UIImage(data: resizeImage ?? Data()))
-        contactDetailViewModel?.updateImageBlock?(UIImage(data: resizeImage ?? Data()))
+        contactDetailViewModel?.onDidUpdateImageBlock?(UIImage(data: resizeImage ?? Data()))
         picker.dismiss(animated: true, completion: nil)
     }
     
@@ -249,7 +312,7 @@ extension ContactDetailController: UIImagePickerControllerDelegate, UINavigation
 extension ContactDetailController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.contactDetailViewModel?.numberOfRows() ?? 0
+        return self.contactDetailViewModel?.numberOfRows ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -257,44 +320,24 @@ extension ContactDetailController: UITableViewDataSource {
         return UITableViewAutomaticDimension
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView,
+                   cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let detailCellVM = contactDetailViewModel?.detailCellViewModel(forIndexPath: indexPath) ??
-            ContactDetailCellViewModel(value: contactDetailViewModel?.note, typeCell: .name)
+            ContactDetailCellViewModel(value: contactDetailViewModel?.note, cellType: .name)
         
-        guard let cellSound = tableView.dequeueReusableCell(withIdentifier: cellSoundId, for: indexPath)
-            as? ContactSoundCell else { return UITableViewCell(style: .default, reuseIdentifier: cellSoundId) }
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: detailCellReuse, for: indexPath)
-            as? ContactDetailCell else { return UITableViewCell(style: .default, reuseIdentifier: detailCellReuse) }
-        guard let cellNote = tableView.dequeueReusableCell(withIdentifier: cellNoteId, for: indexPath)
-            as? ContactNoteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellNoteId)}
-        guard let cellDelete = tableView.dequeueReusableCell(withIdentifier: cellDeleteId, for: indexPath)
-            as? ContactDeleteCell else { return UITableViewCell(style: .default, reuseIdentifier: cellDeleteId)}
-        
-        if let detailCellViewModel = detailCellVM as? ContactDetailCellViewModel {
-            cell.configure(with: detailCellViewModel)
-            cell.changeTextBlock = { [] text in
-                detailCellViewModel.changeData(with: text)
-            }
-            return cell
-        } else if let songCellViewModel = detailCellVM as? ContactSoundCellViewModel {
-            cellSound.configure(with: songCellViewModel)
-            cellSound.changeSoundBlock = { [] in
-                songCellViewModel.requestAction()
-            }
-            return cellSound
-        } else if let noteCellViewModel = detailCellVM as? ContactNoteCellViewModel {
-            cellNote.configure(with: noteCellViewModel)
-            cellNote.changeTextBlock = { [] text in
-                noteCellViewModel.changeData(with: text)
-            }
-            return cellNote
-        } else {
-            let deleteCellViewModel = detailCellVM as? ContactDeleteCellViewModel
-            cellDelete.configure(with: deleteCellViewModel)
-            cellDelete.deleteRequestBlock = { [] in
-                deleteCellViewModel?.deleteAction()
-            }
-            return cellDelete
+        switch indexPath.row {
+        case CellType.nameCell.rawValue, CellType.lastNameCell.rawValue, CellType.phoneCell.rawValue:
+            return self.getDetailCell(with: detailCellVM, and: indexPath, in: tableView)
+
+        case CellType.noteCell.rawValue:
+            return self.getNoteCell(with: detailCellVM, and: indexPath, in: tableView)
+            
+        case CellType.soundCell.rawValue:
+            return self.getSongCell(with: detailCellVM, and: indexPath, in: tableView)
+            
+        default:
+            return self.getDeleteCell(with: detailCellVM, and: indexPath, in: tableView)
         }
     }
     

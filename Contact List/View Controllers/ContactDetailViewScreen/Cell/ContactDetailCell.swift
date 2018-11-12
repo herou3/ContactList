@@ -9,7 +9,7 @@ class ContactDetailCell: DefaultCell {
     // MARK: - Properties
     var changeTextBlock: ((_ text: String?) -> Void)?
     private var didTapReturnButtonBlock: (() -> Void)?
-    private var typeCell: TypeCell?
+    private var cellType: StandartCellType?
     private var value: String {
         return inputTextField.text ?? ""
     }
@@ -127,17 +127,16 @@ class ContactDetailCell: DefaultCell {
     }
     
     func configure(with viewModel: ContactDetailCellViewModel) {
-        self.typeCell = viewModel.typeCell
-        setupViews()
+        self.cellType = viewModel.cellType
         didTapReturnButtonBlock = { [weak viewModel] in
-            viewModel?.requestTapReturnAction()
+            viewModel?.requestSelectNextResponder()
         }
-        typeInputLabel.text = typeCell?.description
-        if typeCell == .phone {
+        typeInputLabel.text = cellType?.description
+        if cellType == .phone {
             inputTextField.keyboardType = .phonePad
         }
         inputTextField.text = viewModel.value
-        inputTextField.placeholder = typeCell?.description
+        inputTextField.placeholder = cellType?.description
     }
     
     // MARK: - Bind to viewModel
@@ -169,25 +168,25 @@ extension ContactDetailCell: UITextFieldDelegate {
                    shouldChangeCharactersIn range: NSRange,
                    replacementString string: String) -> Bool {
         
-        if typeCell == .phone {
+        if cellType == .phone {
+            guard var sanitizedText = textField.text else { return true }
+            sanitizedText = sanitizedText.sanitizedPhoneNumber()
+            let newLenght = sanitizedText.count + string.count - range.length
+            textField.text = sanitizedText
             
-            let aSet = NSCharacterSet(charactersIn: "+0123456789").inverted
-            let compSepByCharInSet = string.components(separatedBy: aSet)
-            let numberFiltered = compSepByCharInSet.joined(separator: "")
-            guard let text = textField.text else { return true }
-            let newLenght = text.count + string.count - range.length
-            return string == numberFiltered &&  newLenght <= Constant.contactPropertyCharactersCount
+            return newLenght <= Constant.contactPropertyCharactersCount
+            
         } else {
+            guard let sanitizedText = textField.text else { return true }
+            let newLenght = sanitizedText.count + string.count - range.length
             
-            guard let text = textField.text else { return true }
-            let newLenght = text.count + string.count - range.length
             return newLenght <= Constant.contactPropertyCharactersCount
         }
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         
-        if typeCell == .phone {
+        if cellType == .phone {
             textField.inputAccessoryView = inputToolbar
         }
         

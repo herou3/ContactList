@@ -11,7 +11,7 @@ protocol ContactDetailViewModelDelegate: class {
     func contactDetailViewModel(_ viewModel: ContactDetailViewModel, didDeleteContact contact: Contact?)
 }
 
-enum TypeCell {
+enum StandartCellType {
     case name, lastName, phone
     
     var description: String {
@@ -26,6 +26,10 @@ enum TypeCell {
     }
 }
 
+enum CellType: Int {
+    case nameCell, lastNameCell, phoneCell, noteCell, soundCell, deleteCell
+}
+
 class ContactDetailViewModel: ContactDetailViewModelProtocol {
     
     // MARK: - Propertiies
@@ -33,12 +37,12 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     private var newContactCellsViewModel: [ContactCellViewModelProtocol] = []
     weak var delegate: ContactDetailViewModelDelegate?
     
-    private var updateDataSourceBlock: (() -> Void)?
-    private var updateSoundNameBlock: ((_ value: String?) -> Void)?
-    var updateImageBlock: ((_ value: UIImage?) -> Void)?
-    var changeSoundBlock: (() -> Void)?
-    var deleteContactBlock: (() -> Void)?
-    var didRequestTapBlock: ((_ nextNumberCell: Int) -> Void)?
+    private var onDidUpdateDataSourceBlock: (() -> Void)?
+    private var onDidUpdateSoundNameBlock: ((_ value: String?) -> Void)?
+    var onDidUpdateImageBlock: ((_ value: UIImage?) -> Void)?
+    var onDidChangeSoundValueBlock: (() -> Void)?
+    var onDidRequestOfDeleteBlock: (() -> Void)?
+    var onDidRequestTapBlock: ((_ nextNumberCell: Int) -> Void)?
     
     var firstName: String?
     var lastName: String?
@@ -46,6 +50,10 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     var sound: String?
     var note: String?
     var image: UIImage?
+    
+    var numberOfRows: Int {
+        return newContactCellsViewModel.count
+    }
     
     // MARK: - init / deinit
     init(contact: Contact?) {
@@ -62,20 +70,20 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     // MARK: - Make cells view model
     private func makeCellsViewModel() {
         // for internal methods
-        let firstNameCellViewModel = ContactDetailCellViewModel(value: self.firstName, typeCell: .name)
-        let lastNameCellViewModel = ContactDetailCellViewModel(value: self.lastName, typeCell: .lastName)
-        let phoneCellViewModel = ContactDetailCellViewModel(value: self.phone, typeCell: .phone)
+        let firstNameCellViewModel = ContactDetailCellViewModel(value: self.firstName, cellType: .name)
+        let lastNameCellViewModel = ContactDetailCellViewModel(value: self.lastName, cellType: .lastName)
+        let phoneCellViewModel = ContactDetailCellViewModel(value: self.phone, cellType: .phone)
         let soundCellViewModel = ContactSoundCellViewModel(value: self.sound)
         
-        soundCellViewModel.changeSoundBlock = { [unowned self] in
-            self.onDidChangeSoundValue()
+        soundCellViewModel.onDidChangedSoundState = { [unowned self] in
+            self.changeSound()
         }
         
         let noteCellViewModel = ContactNoteCellViewModel(value: self.note)
         let deleteContactCellViewModel = ContactDeleteCellViewModel(value: "Delete Contact")
         
         deleteContactCellViewModel.deleteRequestBlock = { [unowned self] in
-            self.onDidRequestOfDelete()
+            self.deleteContact()
         }
         
         newContactCellsViewModel.append(firstNameCellViewModel)
@@ -89,44 +97,40 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
         
         for value in (0...newContactCellsViewModel.count) {
             guard let detailViewModel = newContactCellsViewModel[value] as? ContactDetailCellViewModel else { break }
-            detailViewModel.requestTapBlock = { [] in
+            detailViewModel.onDidTapReturnButton = { [] in
                 let nextValue = value + 1
-                self.didRequestTapBlock?(nextValue)
+                self.onDidRequestTapBlock?(nextValue)
             }
         }
         
-        updateDataSourceBlock = { [unowned self] in
+        onDidUpdateDataSourceBlock = { [unowned self] in
             self.firstName = firstNameCellViewModel.value
             self.lastName = lastNameCellViewModel.value
             self.phone = phoneCellViewModel.value
             self.note = noteCellViewModel.value
         }
         
-        updateSoundNameBlock = { [unowned self] value in
+        onDidUpdateSoundNameBlock = { [unowned self] value in
             self.sound = value
             soundCellViewModel.value = self.sound
         }
         
-        updateImageBlock = { [unowned self] value in
+        onDidUpdateImageBlock = { [unowned self] value in
             self.image = value
         }
         
-        changeSoundBlock = { [unowned self] in
+        onDidChangeSoundValueBlock = { [unowned self] in
             self.delegate?.contactDetailViewModelDidReqestShowSoundPicker(self)
         }
     }
     
     // MARK: - Methods ContactDetailViewModelProtocol
-    func numberOfRows() -> Int {
-        return newContactCellsViewModel.count
-    }
-    
     func detailCellViewModel(forIndexPath indexPath: IndexPath) -> ContactCellViewModelProtocol? {
         return newContactCellsViewModel[indexPath.row]
     }
     
     func saveContact() {
-        updateDataSourceBlock?()
+        onDidUpdateDataSourceBlock?()
         delegate?.contactDetailViewModel(self, didSaveContact: self.updateContact())
     }
     
@@ -136,20 +140,20 @@ class ContactDetailViewModel: ContactDetailViewModelProtocol {
     }
     
     // MARK: - Bind to viewController
-    func onDidChangeSoundValue() {
-        changeSoundBlock?()
+    func changeSound() {
+        onDidChangeSoundValueBlock?()
     }
     
-    func onDidRequestOfDelete() {
-        deleteContactBlock?()
+    func deleteContact() {
+        onDidRequestOfDeleteBlock?()
     }
     
-    func onDidGetRequestDelete() {
+    func getRequestDelete() {
         delegate?.contactDetailViewModel(self, didDeleteContact: self.contact)
     }
     
-    func onDidUpdateSound(soundName: String?) {
-        updateSoundNameBlock?(soundName)
+    func updateSound(soundName: String?) {
+        onDidUpdateSoundNameBlock?(soundName)
     }
     
     func updateContact() -> Contact? {

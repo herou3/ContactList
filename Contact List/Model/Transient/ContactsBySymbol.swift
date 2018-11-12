@@ -9,6 +9,7 @@
 import Foundation
 
 struct ContactsBySymbol {
+    
     // MARK: - Properties
     var symbol: Character
     var contacts: [Contact]

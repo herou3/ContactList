@@ -73,8 +73,6 @@ class  ContactSoundCell: DefaultCell {
     
     func configure(with viewModel: ContactSoundCellViewModel) {
         
-        setupViews()
-        
         if viewModel.value != nil {
             chooseSoundButton.setTitle(viewModel.value, for: .normal)
         } else {

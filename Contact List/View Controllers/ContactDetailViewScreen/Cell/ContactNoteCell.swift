@@ -71,7 +71,6 @@ class ContactNoteCell: DefaultCell {
     }
     
     func configure(with viewModel: ContactNoteCellViewModel) {
-        setupViews()
         typeInputLabel.text = "Note"
         inputTextView.text = viewModel.value
     }

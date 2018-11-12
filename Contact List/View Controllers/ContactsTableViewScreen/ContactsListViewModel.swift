@@ -78,7 +78,7 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
     }
 
     // MARK: - Protocols methods
-    func numberOfRows(numberOfRowsInSection section: Int) -> Int {
+    func numberOfRows(inSection section: Int) -> Int {
         let valueString = contactsList[section].contacts
         return valueString.count
     }
@@ -171,7 +171,8 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         for numberContact in 0...contacts.count-1 {
             let symbolOfContact: Character
             symbolOfContact = contacts[numberContact].lastName?.first ?? "#"
-            let numberElementInContactsByCharacters = numberOfComprise(isComprise: contactsByCharacters, symbol: symbolOfContact)
+            let numberElementInContactsByCharacters = findIndexOfContactsBySymbol(by: contactsByCharacters,
+                                                                                  symbol: symbolOfContact)
             guard let numberValue = numberElementInContactsByCharacters else {
                 contactsByCharacters.append(ContactsBySymbol(symbol: symbolOfContact, contacts: []))
                 self.indexTitles.append(String(describing: symbolOfContact))
@@ -203,7 +204,7 @@ class ContactsListViewModel: ContactsListViewModelProtocol {
         contactsList = contactsByCharacters
     }
     
-    private func numberOfComprise(isComprise contactsBySymbol: [ContactsBySymbol], symbol: Character) -> Int? {
+    private func findIndexOfContactsBySymbol(by contactsBySymbol: [ContactsBySymbol], symbol: Character) -> Int? {
         guard !contactsBySymbol.isEmpty else { return nil }
         guard contactsBySymbol.count - 1 >= 0 else { return nil }
         for number in 0...contactsBySymbol.count - 1 where symbol == contactsBySymbol[number].symbol {
